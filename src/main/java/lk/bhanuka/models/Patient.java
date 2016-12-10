@@ -4,4 +4,13 @@ package lk.bhanuka.models;
  * Created by bhanuka on 12/9/16.
  */
 public class Patient {
+
+    private Long id;
+
+    private String name;
+
+    public Patient(Long id, String name){
+        this.id = id;
+        this.name = name;
+    }
 }
