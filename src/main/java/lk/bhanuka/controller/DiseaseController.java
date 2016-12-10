@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.List;
+
 /**
  * Created by bhanuka on 12/9/16.
  */
@@ -17,10 +19,10 @@ public class DiseaseController {
     private DiseaseDAO diseaseDAO = new DiseaseDAO();
 
     @RequestMapping(value = "/diseases", method = RequestMethod.GET)
-    public String getDiseases(){
+    public List getDiseases(){
 
-        //return this.diseaseDAO.diseaseList();
-        return "Hello";
+        return this.diseaseDAO.diseaseList();
+//        return "Hello";
     }
 
     @RequestMapping(value = "/diseases/{id}", method = RequestMethod.GET)
@@ -38,6 +40,7 @@ public class DiseaseController {
         if(returnDisease != null){
             return returnDisease;
         }
+
         return null;
     }
 
