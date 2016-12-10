@@ -1,33 +1,62 @@
 package lk.bhanuka.DAO;
 
 import lk.bhanuka.models.Disease;
+import lk.bhanuka.models.MedicalOfficer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by bhanuka on 12/9/16.
  */
 public class DiseaseDAO extends DAO{
 
-    public ArrayList diseaseList(){
-        // Perform database operations with this.dataservice
+    public DiseaseDAO(){
+        super();
+        this.tableName = "disease";
+    }
 
-        ArrayList<Disease> returnList = new ArrayList<Disease>();
+    public List<Disease> diseaseList(){
 
-        for(int i =0; i < 6; i++){
-            returnList.add(new Disease(i, "Some Name"));
-        }
+        return  this.findDiseases(new ArrayList());
 
-        System.out.println(returnList);
-
-        return returnList;
     }
 
     public Disease getDisease(long id){
 
-        // Perform database operations with this.dataservice
+        ArrayList<String> conditions = new ArrayList<String>();
 
-        return new Disease(id, "name");
+        conditions.add(" id = "+ Long.toString(id));
+
+        List<HashMap> results = this.dataService.get(this.tableName, conditions);
+
+        for(HashMap element : results) {
+
+            return new Disease(Long.valueOf(element.get("id").toString()), element.get("name").toString());
+
+        }
+
+        return null;
+
+    }
+
+    public List<Disease> findDiseases(ArrayList conditions){
+
+        ArrayList<Disease> diseases = new ArrayList<Disease>();
+
+        List<HashMap> results = this.dataService.get(this.tableName, conditions);
+
+        for(HashMap element : results) {
+
+            Disease disease = new Disease(Long.valueOf(element.get("id").toString()), element.get("name").toString());
+
+            diseases.add(disease);
+
+        }
+
+        return diseases;
+
     }
 
     public Disease addDisease(Disease disease){

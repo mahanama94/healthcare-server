@@ -2,16 +2,20 @@ package lk.bhanuka.database;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by bhanuka on 12/10/16.
  */
 public interface DataAdapter {
 
-    public ResultSet query(String query);
+    public List<HashMap> query(String query);
 
-    public ResultSet action(String action, String table, ArrayList<String> conditions);
+    public List<HashMap> action(String action, String table, ArrayList<String> conditions);
 
-    public ResultSet get(String table, ArrayList<String> conditions);
+    public List<HashMap> get(String table, ArrayList<String> conditions);
+
+    public boolean insert(String table, HashMap values);
 
 }

@@ -9,7 +9,10 @@ public abstract class DAO {
 
     protected DataService dataService;
 
+    protected String tableName;
+
     public DAO(){
         this.dataService = new DataService();
+        this.tableName = "";
     }
 }
