@@ -22,4 +22,8 @@ public class DataService implements DataAdapter{
         return this.dataAdapter.action(action, table, conditions);
     }
 
+    public ResultSet get(String table, ArrayList<String> conditions) {
+        return this.dataAdapter.get(table, conditions);
+    }
+
 }

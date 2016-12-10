@@ -54,4 +54,10 @@ public class MySQLDataAdapter implements DataAdapter {
         return this.query(action+" From "+table+" where "+ processedConsitions);
     }
 
+    public ResultSet get(String table, ArrayList<String> conditions) {
+
+        return this.action(" select * ", table, conditions);
+
+    }
+
 }
