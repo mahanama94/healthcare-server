@@ -12,7 +12,7 @@ public class DataService implements DataAdapter{
 
     public DataService(){
         this.dataAdapter = new MySQLDataAdapter();
-    };
+    }
 
     public ResultSet query(String query) {
         return this.dataAdapter.query(query);
