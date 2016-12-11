@@ -12,11 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Created by bhanuka on 12/11/16.
  */
-public class TestInterceptor implements HandlerInterceptor{
+public class AuthInterceptor implements HandlerInterceptor{
 
     private Authenticator authenticator;
 
-    public TestInterceptor(){
+    public AuthInterceptor(){
 
         this.authenticator = new Authenticator();
 
@@ -24,7 +24,9 @@ public class TestInterceptor implements HandlerInterceptor{
 
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        if( ! this.authenticator.checkAuth()){
+        if( ! this.authenticator.checkAuth(request)){
+
+            this.handleNonAuthenticated(response);
 
             return false;
 
@@ -40,4 +42,9 @@ public class TestInterceptor implements HandlerInterceptor{
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
 
     }
+
+    private void handleNonAuthenticated(HttpServletResponse response){
+        // TODO - Handle non authenticated requests
+    }
+
 }
