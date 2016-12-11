@@ -14,7 +14,7 @@ public class ReportDAO extends DAO {
 
     public ReportDAO(){
         super();
-        this.tableName = "report";
+        this.tableName = "med_report";
     }
 
     public List<Report> getReports(){

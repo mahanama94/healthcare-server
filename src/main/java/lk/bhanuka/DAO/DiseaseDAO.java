@@ -20,7 +20,7 @@ public class DiseaseDAO extends DAO{
     public DiseaseDAO(){
         super();
         this.tableName = "disease";
-        this.primaryKey = "id";
+        this.primaryKey = "disease_id";
 
     }
 
