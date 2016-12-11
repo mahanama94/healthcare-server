@@ -1,6 +1,8 @@
 package lk.bhanuka.DAO;
 
 import lk.bhanuka.models.Patient;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +15,8 @@ public class PatientDAO extends DAO{
 
     public PatientDAO(){
         super();
-        this.tableName = " report ";
+        this.tableName = " patient ";
+        this.primaryKey = "id";
     }
 
     public List<Patient> getPatients(){
@@ -24,13 +27,13 @@ public class PatientDAO extends DAO{
 
         ArrayList<String> conditions = new ArrayList<String>();
 
-        conditions.add(" id = "+ id.toString());
+        conditions.add(this.primaryKey+ " = "+ id.toString());
 
         List<HashMap> results = this.dataService.get(this.tableName, conditions);
 
         for(HashMap element : results){
 
-            Patient patient = new Patient(Long.valueOf(element.get("id").toString()), element.get("name").toString());
+            Patient patient = this.createPatient(element);
 
             return patient;
 
@@ -47,13 +50,19 @@ public class PatientDAO extends DAO{
 
         for(HashMap element : results){
 
-            Patient patient = new Patient(Long.valueOf(element.get("id").toString()), element.get("name").toString());
+            Patient patient = this.createPatient(element);
 
             patients.add(patient);
 
         }
 
         return patients;
+
+    }
+
+    private Patient createPatient(HashMap element){
+
+        return new Patient(Long.valueOf(element.get(this.primaryKey).toString()), element.get("name").toString(), element.get("address").toString());
 
     }
 

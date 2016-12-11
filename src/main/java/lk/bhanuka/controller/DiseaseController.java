@@ -2,8 +2,9 @@ package lk.bhanuka.controller;
 
 import lk.bhanuka.DAO.DiseaseDAO;
 import lk.bhanuka.models.Disease;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -12,10 +13,21 @@ import java.util.List;
 @RestController
 public class DiseaseController {
 
-    private DiseaseDAO diseaseDAO = new DiseaseDAO();
+    private DiseaseDAO diseaseDAO;
+
+    public DiseaseController(){
+        this.diseaseDAO = new DiseaseDAO();
+    }
 
     @RequestMapping(value = "/diseases", method = RequestMethod.GET)
     public List getDiseases(){
+
+        return this.diseaseDAO.diseaseList();
+
+    }
+
+    @RequestMapping(value = "/diseases/search", method = RequestMethod.GET)
+    public List findDiseases(){
 
         return this.diseaseDAO.diseaseList();
 
@@ -29,15 +41,10 @@ public class DiseaseController {
     }
 
     @RequestMapping(value="/diseases", method = RequestMethod.POST)
-    public Disease getDisease(@RequestBody Disease disease){
+    public String getDisease(HttpServletRequest request, Model model){
 
-        Disease returnDisease = this.diseaseDAO.addDisease(disease);
+        return request.getParameter("json");
 
-        if(returnDisease != null){
-            return returnDisease;
-        }
-
-        return null;
     }
 
 }

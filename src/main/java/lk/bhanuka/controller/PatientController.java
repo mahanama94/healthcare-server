@@ -2,12 +2,9 @@ package lk.bhanuka.controller;
 
 import lk.bhanuka.DAO.PatientDAO;
 import lk.bhanuka.models.Patient;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +13,12 @@ import java.util.List;
 @RestController
 public class PatientController {
 
-    private PatientDAO patientDAO = new PatientDAO();
+
+    private PatientDAO patientDAO;
+
+    public PatientController(){
+        this.patientDAO = new PatientDAO();
+    }
 
     @RequestMapping( value = "/patients", method = RequestMethod.GET)
     public List getPatients(){
@@ -25,13 +27,18 @@ public class PatientController {
 
     }
 
-    @RequestMapping(value = "/patient/{id}", method = RequestMethod.GET)
+    @RequestMapping( value = "/patients/search", method = RequestMethod.GET)
+    public List findPatients(){
+
+        return  this.patientDAO.findPatients(new ArrayList<String>());
+
+    }
+
+    @RequestMapping(value = "/patients/{id}", method = RequestMethod.GET)
     public Patient getPatient(@PathVariable("id") Long id){
 
         return  this.patientDAO.getPatient(id);
 
     }
-
-
 
 }
