@@ -16,7 +16,7 @@ public class PatientDAO extends DAO{
     public PatientDAO(){
         super();
         this.tableName = " patient ";
-        this.primaryKey = "id";
+        this.primaryKey = "patient_id";
     }
 
     public List<Patient> getPatients(){
@@ -62,7 +62,7 @@ public class PatientDAO extends DAO{
 
     private Patient createPatient(HashMap element){
 
-        return new Patient(Long.valueOf(element.get(this.primaryKey).toString()), element.get("name").toString(), element.get("address").toString());
+        return new Patient(Long.valueOf(element.get(this.primaryKey).toString()), element.get("NAME").toString());
 
     }
 
