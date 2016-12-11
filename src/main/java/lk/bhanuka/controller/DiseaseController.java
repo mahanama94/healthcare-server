@@ -1,10 +1,14 @@
 package lk.bhanuka.controller;
 
+import com.sun.javafx.sg.prism.NGShape;
 import lk.bhanuka.DAO.DiseaseDAO;
 import lk.bhanuka.models.Disease;
+import lk.bhanuka.validators.NewDiseaseValidator;
+import lk.bhanuka.validators.UpdateDiseaseValidator;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -15,8 +19,17 @@ public class DiseaseController {
 
     private DiseaseDAO diseaseDAO;
 
+    private NewDiseaseValidator newDiseaseValidator;
+
+    private UpdateDiseaseValidator updateDiseaseValidator;
+
     public DiseaseController(){
+
         this.diseaseDAO = new DiseaseDAO();
+
+        this.newDiseaseValidator = new NewDiseaseValidator();
+
+        this.updateDiseaseValidator = new UpdateDiseaseValidator();
     }
 
     @RequestMapping(value = "/diseases", method = RequestMethod.GET)
@@ -41,9 +54,16 @@ public class DiseaseController {
     }
 
     @RequestMapping(value="/diseases", method = RequestMethod.POST)
-    public String getDisease(HttpServletRequest request, Model model){
+    public HashMap addDisease(HttpServletRequest request){
 
-        return request.getParameter("json");
+        return this.newDiseaseValidator.validate(request);
+
+    }
+
+    @RequestMapping(value = "/diseases", method = RequestMethod.PUT)
+    public HashMap updateDisease(HttpServletRequest request){
+
+        return this.updateDiseaseValidator.validate(request);
 
     }
 
