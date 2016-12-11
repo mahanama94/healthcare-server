@@ -2,6 +2,8 @@ package lk.bhanuka.DAO;
 
 import lk.bhanuka.models.Disease;
 import lk.bhanuka.models.MedicalOfficer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,11 +12,16 @@ import java.util.List;
 /**
  * Created by bhanuka on 12/9/16.
  */
+@Component
 public class DiseaseDAO extends DAO{
+
+    private ArrayList<Disease> diseases;
 
     public DiseaseDAO(){
         super();
         this.tableName = "disease";
+        this.primaryKey = "id";
+
     }
 
     public List<Disease> diseaseList(){
@@ -27,13 +34,18 @@ public class DiseaseDAO extends DAO{
 
         ArrayList<String> conditions = new ArrayList<String>();
 
-        conditions.add(" id = "+ Long.toString(id));
+        conditions.add(this.primaryKey + " = "+ Long.toString(id));
 
         List<HashMap> results = this.dataService.get(this.tableName, conditions);
 
-        for(HashMap element : results) {
+        if( results != null) {
 
-            return new Disease(Long.valueOf(element.get("id").toString()), element.get("name").toString());
+
+            for (HashMap element : results) {
+
+                return new Disease(Long.valueOf(element.get(this.primaryKey).toString()), element.get("name").toString());
+
+            }
 
         }
 
@@ -49,7 +61,7 @@ public class DiseaseDAO extends DAO{
 
         for(HashMap element : results) {
 
-            Disease disease = new Disease(Long.valueOf(element.get("id").toString()), element.get("name").toString());
+            Disease disease = new Disease(Long.valueOf(element.get(this.primaryKey).toString()), element.get("name").toString());
 
             diseases.add(disease);
 

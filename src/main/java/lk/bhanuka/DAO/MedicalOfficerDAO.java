@@ -14,6 +14,7 @@ public class MedicalOfficerDAO extends DAO{
     public MedicalOfficerDAO(){
         super();
         this.tableName = "medicalOfficer";
+        this.primaryKey = "id";
     }
 
     public List<MedicalOfficer> getMedicalOfficers(){
@@ -32,7 +33,7 @@ public class MedicalOfficerDAO extends DAO{
 
         for(HashMap element : results) {
 
-            MedicalOfficer medicalOfficer = new MedicalOfficer(Long.valueOf(element.get("id").toString()), element.get("name").toString());
+            MedicalOfficer medicalOfficer = this.createMedicalOfficer(element);
 
             return medicalOfficer;
 
@@ -50,7 +51,7 @@ public class MedicalOfficerDAO extends DAO{
 
         for(HashMap element : results) {
 
-            MedicalOfficer medicalOfficer = new MedicalOfficer(Long.valueOf(element.get("id").toString()), element.get("name").toString());
+            MedicalOfficer medicalOfficer = this.createMedicalOfficer(element);
 
             medicalOfficers.add(medicalOfficer);
 
@@ -64,6 +65,12 @@ public class MedicalOfficerDAO extends DAO{
         // Perform database operations with this.dataservice
 
         return null;
+
+    }
+
+    private MedicalOfficer createMedicalOfficer(HashMap element){
+
+        return new MedicalOfficer(Long.valueOf(element.get(this.primaryKey).toString()), element.get("name").toString());
 
     }
 }

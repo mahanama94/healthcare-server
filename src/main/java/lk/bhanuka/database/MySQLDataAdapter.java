@@ -22,18 +22,22 @@ public class MySQLDataAdapter implements DataAdapter {
         try {
 
             Class.forName("com.mysql.jdbc.Driver");
-            this.databaseConnection = DriverManager.getConnection("jdbc:mysql://"+this.hostName+"/"+this.databaseName , this.username, this.password);
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            this.databaseConnection = DriverManager.getConnection("jdbc:mysql://"+this.hostName+":"+Integer.toString(this.portNumber)+"/"+this.databaseName, this.username, this.password);
+
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Class not found ");
         }
     }
 
     public List query(String query) {
         try {
             Statement statement = this.databaseConnection.createStatement();
+
+            System.out.println(query);
 
             return this.resultsToList(statement.executeQuery(query));
 
@@ -48,7 +52,7 @@ public class MySQLDataAdapter implements DataAdapter {
         String processedConditions = "";
 
         for (String condition :conditions) {
-            processedConditions = processedConditions + " AND ";
+            processedConditions = condition + " AND ";
         }
 
         processedConditions = processedConditions + " '1' = '1' ";

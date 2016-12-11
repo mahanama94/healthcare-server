@@ -11,8 +11,11 @@ public abstract class DAO {
 
     protected String tableName;
 
+    protected String primaryKey;
+
     public DAO(){
         this.dataService = new DataService();
         this.tableName = "";
+        this.primaryKey = "";
     }
 }
