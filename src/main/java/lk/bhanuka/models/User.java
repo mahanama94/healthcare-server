@@ -9,9 +9,24 @@ public abstract class User {
 
     protected String name;
 
+    protected String dateOfBirth;
+
+    protected District district;
+
+
     public User(Long id, String name){
         this.id = id;
         this.name = name;
+    }
+
+    public abstract int getAccessLevel();
+
+    public void setDateOfBirth(String dateOfBirth){
+        this.dateOfBirth =dateOfBirth;
+    }
+
+    public void setDistrict(District district){
+        this.district = district;
     }
 
     public Long getId(){
@@ -24,5 +39,7 @@ public abstract class User {
 
     public abstract String getRole();
 
-    public abstract int getAccessLevel();
+    public String getDateOfBirth(){ return this.dateOfBirth; }
+
+    public District getDistrict(){ return this.district; }
 }

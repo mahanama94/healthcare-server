@@ -5,9 +5,18 @@ package lk.bhanuka.models;
  */
 public class MedicalOfficer extends User{
 
+    private String specialization;
+
     public MedicalOfficer(long id, String name){
         super(id, name);
     }
+
+    public void setSpecialization(String specialization){
+
+        this.specialization = specialization;
+
+    }
+
 
     public String getRole() {
         return "medicalOfficer";
