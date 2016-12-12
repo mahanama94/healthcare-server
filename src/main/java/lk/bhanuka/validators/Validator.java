@@ -1,5 +1,7 @@
 package lk.bhanuka.validators;
 
+import lk.bhanuka.authentication.Auth;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +11,15 @@ import java.util.HashMap;
  */
 public abstract class Validator {
 
+    /**
+     * ArrayList of required field in the request
+     */
     protected ArrayList<String> required;
+
+    /**
+     * Authentication level for a valid request - or more are valid
+     */
+    protected int accessLevel = 0;
 
     // TODO - move up the method - have a default implementation ( most of the time same happens)
 
@@ -17,7 +27,17 @@ public abstract class Validator {
 
     public HashMap authenticate(){
 
-        return new HashMap();
+        HashMap returnResponse = new HashMap();
+
+//        if(Auth.getUser().getAccessLevel() >= this.accessLevel){
+//
+//            return returnResponse;
+//
+//        }
+//
+//        returnResponse.put("error", "not authenticated");
+
+        return returnResponse;
 
     }
 
