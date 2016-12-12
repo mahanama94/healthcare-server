@@ -1,8 +1,6 @@
 package lk.bhanuka.DAO;
 
 import lk.bhanuka.models.Disease;
-import lk.bhanuka.models.MedicalOfficer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

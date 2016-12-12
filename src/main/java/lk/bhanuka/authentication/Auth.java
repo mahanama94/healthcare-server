@@ -1,10 +1,7 @@
 package lk.bhanuka.authentication;
 
-import com.sun.org.apache.bcel.internal.generic.INEG;
 import lk.bhanuka.models.HealthOfficer;
 import lk.bhanuka.models.User;
-
-import java.util.InputMismatchException;
 
 /**
  * Created by bhanuka on 12/11/16.
