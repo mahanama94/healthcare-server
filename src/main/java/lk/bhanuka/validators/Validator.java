@@ -11,7 +11,15 @@ public abstract class Validator {
 
     protected ArrayList<String> required;
 
+    // TODO - move up the method - have a default implementation ( most of the time same happens)
+
     public abstract HashMap validate(HttpServletRequest request);
+
+    public HashMap authenticate(){
+
+        return new HashMap();
+
+    }
 
     protected HashMap checkRequired(HttpServletRequest request){
 
@@ -29,5 +37,19 @@ public abstract class Validator {
         }
 
         return returnResponse;
+    }
+
+    protected HashMap convert(HttpServletRequest request){
+
+        HashMap response = new HashMap();
+
+        for(String requirement: this.required){
+
+            response.put(requirement, request.getParameter(requirement));
+
+        }
+
+        return response;
+
     }
 }
