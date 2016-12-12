@@ -20,26 +20,5 @@ public class NewPatientValidator extends Validator {
         this.accessLevel = 5;
 
     }
-    public HashMap validate(HttpServletRequest request) {
-
-        HashMap returnResponse = this.checkRequired(request);
-
-        if(returnResponse.get("error") !=null){
-
-            return returnResponse;
-
-        }
-
-//        returnResponse = this.authenticate();
-//
-//        if(returnResponse.get("error") != null){
-//
-//            return returnResponse;
-//
-//        }
-
-        return this.convert(request);
-    }
-
 
 }
