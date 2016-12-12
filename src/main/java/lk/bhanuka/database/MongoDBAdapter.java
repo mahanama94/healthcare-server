@@ -21,7 +21,7 @@ public class MongoDBAdapter implements DataAdapter {
         return null;
     }
 
-    public boolean insert(String table, HashMap values) {
-        return false;
+    public List insert(String table, HashMap values) {
+        return null;
     }
 }

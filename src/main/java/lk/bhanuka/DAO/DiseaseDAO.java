@@ -15,7 +15,16 @@ import java.util.List;
 @Component
 public class DiseaseDAO extends DAO{
 
-    private ArrayList<Disease> diseases;
+    /**
+     *  Column names
+     */
+
+    private String name = "disease_name";
+
+    private String description = "description";
+
+    private String treatment = "treatment";
+
 
     public DiseaseDAO(){
         super();
@@ -43,7 +52,7 @@ public class DiseaseDAO extends DAO{
 
             for (HashMap element : results) {
 
-                return new Disease(Long.valueOf(element.get(this.primaryKey).toString()), element.get("name").toString());
+                return this.createDisease(element);
 
             }
 
@@ -61,7 +70,7 @@ public class DiseaseDAO extends DAO{
 
         for(HashMap element : results) {
 
-            Disease disease = new Disease(Long.valueOf(element.get(this.primaryKey).toString()), element.get("name").toString());
+            Disease disease = this.createDisease(element);
 
             diseases.add(disease);
 
@@ -73,9 +82,37 @@ public class DiseaseDAO extends DAO{
 
     public Disease addDisease(Disease disease){
 
-        // Perform database operations with this.dataservice
+        HashMap values = new HashMap();
+
+        values.put(this.primaryKey, disease.getId());
+        values.put(this.name, disease.getName());
+        values.put(this.description, disease.getDescription());
+        values.put(this.treatment, disease.getTreatment());
+
+        List test = this.dataService.insert(this.tableName, values);
 
         return disease;
+
+    }
+
+    private Disease createDisease(HashMap element){
+
+        Disease newDisease =  new Disease(Long.valueOf(element.get(this.primaryKey).toString()), element.get(this.name).toString());
+        try {
+            newDisease.setDescription(element.get(this.description).toString());
+
+            newDisease.setTreatment(element.get(this.treatment).toString());
+        }
+        catch (Exception e){
+
+            System.out.println("Exception");
+
+        }
+        finally {
+
+            return newDisease;
+
+        }
 
     }
 
