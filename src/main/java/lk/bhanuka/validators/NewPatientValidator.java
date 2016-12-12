@@ -3,6 +3,7 @@ package lk.bhanuka.validators;
 import lk.bhanuka.authentication.Auth;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -10,6 +11,15 @@ import java.util.HashMap;
  */
 public class NewPatientValidator extends Validator {
 
+    public NewPatientValidator(){
+
+        this.required = new ArrayList<String>();
+
+        required.add("name");
+
+        this.accessLevel = 5;
+
+    }
     public HashMap validate(HttpServletRequest request) {
 
         HashMap returnResponse = this.checkRequired(request);
@@ -31,20 +41,5 @@ public class NewPatientValidator extends Validator {
         return this.convert(request);
     }
 
-    public HashMap authenticate(){
-
-        HashMap returnResponse = new HashMap();
-
-        if( Auth.getUser().getRole() == "medicalOfficer"){
-
-            return returnResponse;
-
-        }
-
-        returnResponse.put("error", " permission denied " );
-
-        return returnResponse;
-
-    }
 
 }

@@ -23,4 +23,8 @@ public class Patient extends User{
     public String getRole() {
         return "patient";
     }
+
+    public int getAccessLevel() {
+        return 0;
+    }
 }

@@ -12,4 +12,8 @@ public class MedicalOfficer extends User{
     public String getRole() {
         return "medicalOfficer";
     }
+
+    public int getAccessLevel() {
+        return 5;
+    }
 }
