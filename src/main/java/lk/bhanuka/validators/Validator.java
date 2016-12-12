@@ -21,21 +21,39 @@ public abstract class Validator {
      */
     protected int accessLevel = 0;
 
-    // TODO - move up the method - have a default implementation ( most of the time same happens)
+    public HashMap validate(HttpServletRequest request){
 
-    public abstract HashMap validate(HttpServletRequest request);
+        HashMap returnResponse = this.checkRequired(request);
 
-    public HashMap authenticate(){
+        if(returnResponse.get("error") !=null){
+
+            return returnResponse;
+
+        }
+
+        returnResponse = this.authenticate();
+
+        if(returnResponse.get("error") != null){
+
+            return returnResponse;
+
+        }
+
+        return this.convert(request);
+
+    }
+
+    protected HashMap authenticate(){
 
         HashMap returnResponse = new HashMap();
 
-//        if(Auth.getUser().getAccessLevel() >= this.accessLevel){
-//
-//            return returnResponse;
-//
-//        }
-//
-//        returnResponse.put("error", "not authenticated");
+        if(Auth.getUser().getAccessLevel() >= this.accessLevel){
+
+            return returnResponse;
+
+        }
+
+        returnResponse.put("error", "not authenticated");
 
         return returnResponse;
 
