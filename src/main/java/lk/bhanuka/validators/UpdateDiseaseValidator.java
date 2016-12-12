@@ -21,10 +21,12 @@ public class UpdateDiseaseValidator extends Validator {
         HashMap returnResponse = this.checkRequired(request);
 
         if(returnResponse.get("error") !=null){
+
             return returnResponse;
+
         }
 
-        return returnResponse;
+        return this.convert(request);
     }
 
 }

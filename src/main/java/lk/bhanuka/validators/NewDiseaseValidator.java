@@ -32,7 +32,7 @@ public class NewDiseaseValidator extends Validator {
 	}
 
 	public HashMap converter(HttpServletRequest request){
-		HashMap responce = new HashMap<>();
+		HashMap responce = new HashMap();
 		for(String param: required){
 			responce.put(param, request.getParameter(param));
 			
