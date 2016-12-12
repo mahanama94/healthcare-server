@@ -9,9 +9,12 @@ public class Report {
 
     private String title;
 
-    public Report(String title, MedicalOfficer medicalOfficer){
+    private Disease disease;
+
+    public Report(String title, MedicalOfficer medicalOfficer, Disease disease){
         this.title = title;
         this.medicalOfficer = medicalOfficer;
+        this.disease = disease;
     }
 
     public MedicalOfficer getMedicalOfficer(){
@@ -21,4 +24,6 @@ public class Report {
     public String getTitle(){
         return this.title;
     }
+
+    public Disease getDisease(){ return this.disease; }
 }
