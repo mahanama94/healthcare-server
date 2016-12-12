@@ -1,11 +1,9 @@
 package lk.bhanuka.controller;
 
-//import com.sun.javafx.sg.prism.NGShape;
 import lk.bhanuka.DAO.DiseaseDAO;
 import lk.bhanuka.models.Disease;
 import lk.bhanuka.validators.NewDiseaseValidator;
 import lk.bhanuka.validators.UpdateDiseaseValidator;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;

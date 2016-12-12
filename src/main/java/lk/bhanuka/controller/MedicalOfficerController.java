@@ -5,7 +5,6 @@ import lk.bhanuka.models.MedicalOfficer;
 import lk.bhanuka.validators.NewMedicalOfficerValidator;
 import lk.bhanuka.validators.UpdateMedicalOfficerValidator;
 import org.springframework.web.bind.annotation.*;
-import sun.security.timestamp.HttpTimestamper;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;

@@ -1,9 +1,6 @@
 package lk.bhanuka.DAO;
 
 import lk.bhanuka.models.Patient;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
