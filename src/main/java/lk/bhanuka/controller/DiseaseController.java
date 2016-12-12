@@ -56,6 +56,13 @@ public class DiseaseController {
     @RequestMapping(value="/diseases", method = RequestMethod.POST)
     public HashMap addDisease(HttpServletRequest request){
 
+        System.out.println("Controller invoked ");
+
+        Disease newDisease = new Disease(15, "Some name ");
+
+        newDisease = this.diseaseDAO.addDisease(newDisease);
+
+        // TODO - validate first and add disease to database ( refactor) create disease object and pass to the DAO
         return this.newDiseaseValidator.validate(request);
 
     }

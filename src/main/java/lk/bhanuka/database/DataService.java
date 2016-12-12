@@ -1,6 +1,5 @@
 package lk.bhanuka.database;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,8 +29,8 @@ public class DataService implements DataAdapter{
 
     }
 
-    public boolean insert(String table, HashMap values) {
-        return false;
+    public List insert(String table, HashMap values) {
+        return this.dataAdapter.insert(table, values);
     }
 
 }

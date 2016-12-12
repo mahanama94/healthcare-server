@@ -66,27 +66,87 @@ public class MySQLDataAdapter implements DataAdapter {
 
     }
 
-    public boolean insert(String table, HashMap values) {
-        return false;
+    public List insert(String table, HashMap values) {
+
+        // TODO - Refactor to return auto incrment fields with the state of the query in result set
+
+        System.out.println("Data adapter insert invoked");
+
+        String query = "Insert into "+ table + "(";
+
+        String data = " ) values (";
+
+        Object[] keys = values.keySet().toArray();
+
+        for( int i =0; i < keys.length; i++){
+
+            query = query + keys[i].toString();
+
+            if( values.get(keys[i]) != null) {
+                if (values.get(keys[i]).getClass().equals(String.class)) {
+                    data = data + "'" + values.get(keys[i]) + "'";
+                } else {
+                    data = data + values.get(keys[i]);
+                }
+            }
+            else{
+                data = data + values.get(keys[i]);
+            }
+
+            if( i != (keys.length -1 )){
+
+                query = query + " , ";
+
+                data = data + " , ";
+            }
+
+        }
+
+        query = query + data + " ) ";
+
+        System.out.println(query);
+
+        try {
+            Statement statement = this.databaseConnection.createStatement();
+
+            statement.executeUpdate(query, statement.RETURN_GENERATED_KEYS);
+
+            ResultSet results = statement.getResultSet();
+
+            return this.resultsToList(results);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     private List resultsToList(ResultSet results) throws SQLException{
 
-        ResultSetMetaData md = results.getMetaData();
+        if( results != null) {
+            ResultSetMetaData md = results.getMetaData();
 
-        int columns = md.getColumnCount();
+            int columns = md.getColumnCount();
 
-        ArrayList list = new ArrayList(50);
+            ArrayList list = new ArrayList();
 
-        while (results.next()){
-            HashMap row = new HashMap(columns);
-            for(int i=1; i<=columns; ++i){
-                row.put(md.getColumnName(i),results.getObject(i));
+            while (results.next()) {
+
+                HashMap row = new HashMap(columns);
+
+                for (int i = 1; i <= columns; ++i) {
+
+                    row.put(md.getColumnName(i), results.getObject(i));
+
+                }
+
+                list.add(row);
             }
-            list.add(row);
-        }
 
-        return list;
+            return list;
+        }
+        return null;
     }
 
 }

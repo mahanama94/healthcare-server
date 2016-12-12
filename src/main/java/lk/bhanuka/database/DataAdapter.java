@@ -1,6 +1,5 @@
 package lk.bhanuka.database;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +15,6 @@ public interface DataAdapter {
 
     public List<HashMap> get(String table, ArrayList<String> conditions);
 
-    public boolean insert(String table, HashMap values);
+    public List insert(String table, HashMap values);
 
 }
