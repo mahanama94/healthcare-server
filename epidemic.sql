@@ -10,9 +10,9 @@ CREATE TABLE province(
 );
 CREATE TABLE disease(
   disease_id VARCHAR(5),
-  disease_name VARCHAR(10),
-  description VARCHAR(20),
-  treatment VARCHAR(20),
+  disease_name VARCHAR(10) NOT NULL,
+  description VARCHAR(20) NOT NULL,
+  treatment VARCHAR(20) NOT NULL,
   PRIMARY KEY(disease_id)
 );
 CREATE TABLE patient(
@@ -26,21 +26,21 @@ CREATE TABLE patient(
 );
 CREATE TABLE medical_officer(
   med_officer_id VARCHAR(5),
-  nic VARCHAR(10),
-  NAME VARCHAR(20),
-  dob DATE,
+  nic VARCHAR(10) NOT NULL,
+  NAME VARCHAR(20) NOT NULL,
+  dob DATE NOT NULL,
   district_id VARCHAR(5),
-  specialization VARCHAR(10),
+  specialization VARCHAR(10) NOT NULL,
   PRIMARY KEY(med_officer_id),
   FOREIGN KEY(district_id) REFERENCES district(district_id) ON DELETE SET NULL
 );
 CREATE TABLE health_officer(
   health_officer_id VARCHAR(5),
-  nic VARCHAR(10),
-  NAME VARCHAR(20),
-  dob DATE,
+  nic VARCHAR(10) NOT NULL,
+  NAME VARCHAR(20) NOT NULL,
+  dob DATE NOT NULL,
   province_id VARCHAR(5),
-  specialization VARCHAR(10),
+  specialization VARCHAR(10) NOT NULL,
   PRIMARY KEY(health_officer_id),
   FOREIGN KEY(province_id) REFERENCES province(province_id) ON DELETE SET NULL
 );
@@ -60,10 +60,9 @@ CREATE TABLE med_report(
 );
 CREATE TABLE med_officer_assign(
   med_officer_id VARCHAR(5),
-  health_officer_id VARCHAR(5),
+  health_officer_id VARCHAR(5) NOT NULL,
   PRIMARY KEY(
-    med_officer_id,
-    health_officer_id
+    med_officer_id
   ),
   FOREIGN KEY(med_officer_id) REFERENCES medical_officer(med_officer_id) ON DELETE CASCADE,
   FOREIGN KEY(health_officer_id) REFERENCES health_officer(health_officer_id) ON DELETE CASCADE
