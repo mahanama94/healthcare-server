@@ -1,6 +1,6 @@
 package lk.bhanuka.controller;
 
-import com.sun.javafx.sg.prism.NGShape;
+//import com.sun.javafx.sg.prism.NGShape;
 import lk.bhanuka.DAO.DiseaseDAO;
 import lk.bhanuka.models.Disease;
 import lk.bhanuka.validators.NewDiseaseValidator;
