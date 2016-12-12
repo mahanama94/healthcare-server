@@ -1,6 +1,7 @@
 package lk.bhanuka.validators;
 
 import javax.servlet.http.HttpServletRequest;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -9,20 +10,35 @@ import java.util.HashMap;
  */
 public class NewDiseaseValidator extends Validator {
 
-    public NewDiseaseValidator(){
-        this.required = new ArrayList<String>();
-        this.required.add("name");
-    }
+	public NewDiseaseValidator() {
+		this.required = new ArrayList<String>();
 
-    public HashMap validate(HttpServletRequest request) {
+		this.required.add("id");
+		this.required.add("name");
+		this.required.add("description");
+		this.required.add("treatment");
+	}
+	
+	public HashMap validate(HttpServletRequest request){
 
-        HashMap returnResponse = this.checkRequired(request);
+		HashMap returnResponse = this.checkRequired(request);
 
-        if(returnResponse.get("error") !=null){
-            return returnResponse;
-        }
+		System.out.println(returnResponse);
 
-        return returnResponse;
-    }
+		if (returnResponse.get("error") != null) {
+			return returnResponse;
+		}
+		return converter(request);
+	}
+
+	public HashMap converter(HttpServletRequest request){
+		HashMap responce = new HashMap<>();
+		for(String param: required){
+			responce.put(param, request.getParameter(param));
+			
+		}
+		return responce;
+	}
+	
 
 }
