@@ -9,17 +9,20 @@ public abstract class User {
 
     protected Long id;
 
+    protected String nic;
+
     protected String name;
 
     protected String dateOfBirth;
 
-    protected District district;
+    protected Region region;
 
     protected ArrayList<Report> medicalReports;
 
     public User(Long id, String name){
         this.id = id;
         this.name = name;
+        this.medicalReports = new ArrayList<Report>();
     }
 
     public abstract int getAccessLevel();
@@ -29,7 +32,23 @@ public abstract class User {
     }
 
     public void setDistrict(District district){
-        this.district = district;
+        this.region = district;
+    }
+
+    public void addMedicalReports(ArrayList<Report> reports){
+
+        for(Report report: reports){
+
+            this.addMedicalReport(report);
+
+        }
+
+    }
+
+    public void addMedicalReport(Report report){
+
+        this.medicalReports.add(report);
+
     }
 
     public Long getId(){
@@ -44,7 +63,7 @@ public abstract class User {
 
     public String getDateOfBirth(){ return this.dateOfBirth; }
 
-    public District getDistrict(){ return this.district; }
+    public District getDistrict(){ return (District)this.region; }
 
     public ArrayList<Report> getMedicalReports(){ return this.medicalReports; }
 }

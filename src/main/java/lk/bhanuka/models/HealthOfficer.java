@@ -9,6 +9,10 @@ public class HealthOfficer extends User {
         super(id, name);
     }
 
+    public void setProvince(Province province){
+        this.region = province;
+    }
+
     public String getRole() {
         return "healthOfficer";
     }
@@ -16,4 +20,6 @@ public class HealthOfficer extends User {
     public int getAccessLevel() {
         return 10;
     }
+
+    public Province getProvince(){ return (Province)this.region; }
 }
