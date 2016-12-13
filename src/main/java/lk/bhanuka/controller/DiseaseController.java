@@ -76,9 +76,6 @@ public class DiseaseController {
 			}
 
 		}
-
-		// Disease test = new Disease(1, "some","some","some");
-		// diseaseDAO.addDisease(test);
 		return validated;
 
 	}

@@ -73,7 +73,7 @@ public class MySQLDataAdapter implements DataAdapter {
 	public List insert(String table, HashMap values) {
 
 		// TODO - Refactor to return auto incrment fields with the state of the
-		// query in result set
+		// query in result set - use database approach
 		List returnList = null;
 
 		System.out.println("Data adapter insert invoked");
@@ -121,12 +121,6 @@ public class MySQLDataAdapter implements DataAdapter {
 			returnList = resultsToList(results);
 
 		}
-
-		// } catch (SQLException e) {
-		// //e.printStackTrace();
-		// System.out.println(e.getClass());
-		//
-		// }
 
 		catch (MySQLIntegrityConstraintViolationException e) {
 			ArrayList<String> errors = new ArrayList<String>();
