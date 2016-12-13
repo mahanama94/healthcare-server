@@ -11,107 +11,111 @@ import java.util.List;
  * Created by bhanuka on 12/9/16.
  */
 @Component
-public class DiseaseDAO extends DAO{
+public class DiseaseDAO extends DAO {
 
-    /**
-     *  Column names
-     */
+	/**
+	 * Column names
+	 */
 
-    private String name = "disease_name";
+	private String name = "disease_name";
 
-    private String description = "description";
+	private String description = "description";
 
-    private String treatment = "treatment";
+	private String treatment = "treatment";
 
+	public DiseaseDAO() {
+		super();
+		this.tableName = "disease";
+		this.primaryKey = "disease_id";
 
-    public DiseaseDAO(){
-        super();
-        this.tableName = "disease";
-        this.primaryKey = "disease_id";
+	}
 
-    }
+	public List<Disease> diseaseList() {
 
-    public List<Disease> diseaseList(){
+		return this.findDiseases(new ArrayList());
 
-        return  this.findDiseases(new ArrayList());
+	}
 
-    }
+	public Disease getDisease(long id) {
 
-    public Disease getDisease(long id){
+		ArrayList<String> conditions = new ArrayList<String>();
 
-        ArrayList<String> conditions = new ArrayList<String>();
+		conditions.add(this.primaryKey + " = " + Long.toString(id));
 
-        conditions.add(this.primaryKey + " = "+ Long.toString(id));
+		List<HashMap> results = this.dataService.get(this.tableName, conditions);
 
-        List<HashMap> results = this.dataService.get(this.tableName, conditions);
+		if (results != null) {
 
-        if( results != null) {
+			for (HashMap element : results) {
 
+				return this.createDisease(element);
 
-            for (HashMap element : results) {
+			}
 
-                return this.createDisease(element);
+		}
 
-            }
+		return null;
 
-        }
+	}
 
-        return null;
+	public List<Disease> findDiseases(ArrayList conditions) {
 
-    }
+		ArrayList<Disease> diseases = new ArrayList<Disease>();
 
-    public List<Disease> findDiseases(ArrayList conditions){
+		List<HashMap> results = this.dataService.get(this.tableName, conditions);
 
-        ArrayList<Disease> diseases = new ArrayList<Disease>();
+		for (HashMap element : results) {
 
-        List<HashMap> results = this.dataService.get(this.tableName, conditions);
+			Disease disease = this.createDisease(element);
 
-        for(HashMap element : results) {
+			diseases.add(disease);
 
-            Disease disease = this.createDisease(element);
+		}
 
-            diseases.add(disease);
+		return diseases;
 
-        }
+	}
 
-        return diseases;
+	public Object addDisease(Disease disease) {
 
-    }
+		HashMap values = new HashMap();
 
-    public Disease addDisease(Disease disease){
+		values.put(this.primaryKey, disease.getId());
+		values.put(this.name, disease.getName());
+		values.put(this.description, disease.getDescription());
+		values.put(this.treatment, disease.getTreatment());
 
-        HashMap values = new HashMap();
+		List test = this.dataService.insert(this.tableName, values);
 
-        values.put(this.primaryKey, disease.getId());
-        values.put(this.name, disease.getName());
-        values.put(this.description, disease.getDescription());
-        values.put(this.treatment, disease.getTreatment());
+		if (test.get(0) == "Duplicate Key") {// A list coming from the
+												// mysqladapter class with only
+												// a single element
+			// System.out.println("Duplicate Key");
+			return "Duplicate Key";
+		} else {
+			return disease;
+		}
 
-        List test = this.dataService.insert(this.tableName, values);
+	}
 
-        return disease;
+	private Disease createDisease(HashMap element) {
 
-    }
+		Disease newDisease = new Disease(Long.valueOf(element.get(this.primaryKey).toString()),
+				element.get(this.name).toString());
+		try {
+			newDisease.setDescription(element.get(this.description).toString());
 
-    private Disease createDisease(HashMap element){
+			newDisease.setTreatment(element.get(this.treatment).toString());
+		} catch (Exception e) {
 
-        Disease newDisease =  new Disease(Long.valueOf(element.get(this.primaryKey).toString()), element.get(this.name).toString());
-        try {
-            newDisease.setDescription(element.get(this.description).toString());
+			System.out.println("Exception");
 
-            newDisease.setTreatment(element.get(this.treatment).toString());
-        }
-        catch (Exception e){
+		} finally {
 
-            System.out.println("Exception");
+			return newDisease;
 
-        }
-        finally {
+		}
 
-            return newDisease;
-
-        }
-
-    }
+	}
 
 }
