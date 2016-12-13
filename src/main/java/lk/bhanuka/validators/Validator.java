@@ -1,6 +1,7 @@
 package lk.bhanuka.validators;
 
 import lk.bhanuka.authentication.Auth;
+import lk.bhanuka.database.DataService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -21,6 +22,23 @@ public abstract class Validator {
      */
     protected int accessLevel = 0;
 
+    /**
+     * Contains list of required database checks
+     */
+    protected ArrayList<HashMap> databaseCheck;
+
+    /**
+     * Database service for performing authentication checks
+     */
+    private DataService dataService;
+
+    public Validator(){
+        this.dataService = new DataService();
+        this.required = new ArrayList<String>();
+        this.accessLevel = 0;
+        this.databaseCheck = new ArrayList<HashMap>();
+    }
+
     public HashMap validate(HttpServletRequest request){
 
         HashMap returnResponse = this.checkRequired(request);
@@ -31,7 +49,7 @@ public abstract class Validator {
 
         }
 
-        returnResponse = this.authenticate();
+        returnResponse = this.authenticate(request);
 
         if(returnResponse.get("error") != null){
 
@@ -39,11 +57,18 @@ public abstract class Validator {
 
         }
 
+//        returnResponse = this.checkDatabase(request);
+//
+//        if(returnResponse.get("error") != null){
+//
+//            return returnResponse;
+//        }
+
         return this.convert(request);
 
     }
 
-    protected HashMap authenticate(){
+    protected HashMap authenticate(HttpServletRequest request){
 
         HashMap returnResponse = new HashMap();
 
@@ -88,6 +113,30 @@ public abstract class Validator {
         }
 
         return response;
+
+    }
+
+    protected HashMap checkDatabase(HttpServletRequest request){
+
+        HashMap returnResponse = new HashMap();
+
+        for(HashMap element: this.databaseCheck){
+
+            ArrayList<String> conditions = new ArrayList<String>();
+            conditions.add(element.get("column") + " " + request.getAttribute(element.get("value").toString()));
+
+            HashMap results = (HashMap) this.dataService.get(element.get("table").toString(), conditions );
+
+            if( results.size() != 0){
+
+                returnResponse.put("error", element.get("column")+" already exist");
+
+                return returnResponse;
+
+            }
+        }
+
+        return returnResponse;
 
     }
 }
