@@ -1,5 +1,7 @@
 package lk.bhanuka.models;
 
+import java.util.ArrayList;
+
 /**
  * Created by bhanuka on 12/11/16.
  */
@@ -13,6 +15,7 @@ public abstract class User {
 
     protected District district;
 
+    protected ArrayList<Report> medicalReports;
 
     public User(Long id, String name){
         this.id = id;
@@ -42,4 +45,6 @@ public abstract class User {
     public String getDateOfBirth(){ return this.dateOfBirth; }
 
     public District getDistrict(){ return this.district; }
+
+    public ArrayList<Report> getMedicalReports(){ return this.medicalReports; }
 }
