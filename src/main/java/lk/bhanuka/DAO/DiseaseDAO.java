@@ -80,7 +80,7 @@ public class DiseaseDAO extends DAO {
 
 		HashMap values = new HashMap();
 
-		values.put(this.primaryKey, disease.getId());
+		//values.put(this.primaryKey, disease.getId());
 		values.put(this.name, disease.getName());
 		values.put(this.description, disease.getDescription());
 		values.put(this.treatment, disease.getTreatment());

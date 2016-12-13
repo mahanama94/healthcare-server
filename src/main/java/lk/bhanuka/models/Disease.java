@@ -5,8 +5,9 @@ package lk.bhanuka.models;
  */
 public class Disease {
 
-    private Long id;
-
+    //private Long id;
+	private Long id;
+	
     private String name;
 
     private String description;
@@ -16,6 +17,12 @@ public class Disease {
     public Disease(long id, String name){
         this.id = id;
         this.name = name;
+    }
+    
+    public Disease(String name, String description, String treatment){
+        this.name = name;
+        this.description = description;
+        this.treatment = treatment;
     }
 
     public Disease(long id, String name, String description, String treatment){
@@ -29,7 +36,7 @@ public class Disease {
     public void setDescription(String description){ this.description = description; }
 
     public long getId(){
-        return  this.id;
+        return id;
     }
 
     public String getName(){

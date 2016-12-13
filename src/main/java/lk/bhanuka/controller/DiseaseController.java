@@ -57,9 +57,14 @@ public class DiseaseController {
 		HashMap validated = newDiseaseValidator.validate(request);
 
 		if (validated.get("error") == null) {
-			Disease newDisease = new Disease(Long.parseLong(request.getParameter("id"), 10),
+//			Disease newDisease = new Disease(Long.parseLong(request.getParameter("id"), 10),
+//					request.getParameter("name"), request.getParameter("description"),
+//					request.getParameter("treatment"));
+			
+			Disease newDisease = new Disease(
 					request.getParameter("name"), request.getParameter("description"),
 					request.getParameter("treatment"));
+
 
 			// after validation check for DB violations
 			Object violated = diseaseDAO.addDisease(newDisease);
@@ -82,7 +87,8 @@ public class DiseaseController {
 
 	@RequestMapping(value = "/diseases", method = RequestMethod.PUT)
 	public HashMap updateDisease(HttpServletRequest request) {
-
+		
+		// TODO This is not functioning
 		return this.updateDiseaseValidator.validate(request);
 
 	}

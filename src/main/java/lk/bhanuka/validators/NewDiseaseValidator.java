@@ -13,7 +13,7 @@ public class NewDiseaseValidator extends Validator {
 	public NewDiseaseValidator() {
 		this.required = new ArrayList<String>();
 
-		this.required.add("id");
+		//this.required.add("id");
 		this.required.add("name");
 		this.required.add("description");
 		this.required.add("treatment");
