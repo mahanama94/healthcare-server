@@ -94,7 +94,7 @@ CREATE FUNCTION `get_age`(
 
 To use the get_age function:
 
-SELECT get_age(date_of_birth, NOW()) AS age FROM person WHERE id = 1
+SELECT get_age(date_of_birth, NOW()) AS age FROM person WHERE patient_id = 1
 
 
 To add a insert to a auto increment table:
