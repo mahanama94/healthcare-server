@@ -5,148 +5,170 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+
 /**
  * Created by bhanuka on 12/10/16.
  */
 public class MySQLDataAdapter implements DataAdapter {
 
-    private String databaseName = "databaseProject";
-    private String username = "databaseProject";
-    private String hostName = "localhost";
-    private String password = "P@ssword123";
-    private int portNumber = 3306;
-    private Connection databaseConnection;
+	private String databaseName = "epidemic";
+	private String username = "databaseProject";
+	private String hostName = "localhost";
+	private String password = "P@ssword123";
+	private int portNumber = 3306;
+	private Connection databaseConnection;
 
-    public MySQLDataAdapter(){
+	public MySQLDataAdapter() {
 
-        try {
+		try {
 
-            Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
 
-            this.databaseConnection = DriverManager.getConnection("jdbc:mysql://"+this.hostName+":"+Integer.toString(this.portNumber)+"/"+this.databaseName, this.username, this.password);
+			this.databaseConnection = DriverManager.getConnection(
+					"jdbc:mysql://" + this.hostName + ":" + Integer.toString(this.portNumber) + "/" + this.databaseName,
+					this.username, this.password);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            System.out.println("Class not found ");
-        }
-    }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			System.out.println("Class not found ");
+		}
+	}
 
-    public List query(String query) {
-        try {
-            Statement statement = this.databaseConnection.createStatement();
+	public List query(String query) {
+		try {
+			Statement statement = this.databaseConnection.createStatement();
 
-            System.out.println(query);
+			System.out.println(query);
 
-            return this.resultsToList(statement.executeQuery(query));
+			return this.resultsToList(statement.executeQuery(query));
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return  null;
-    }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
-    public List action(String action, String table, ArrayList<String> conditions) {
+	public List action(String action, String table, ArrayList<String> conditions) {
 
-        String processedConditions = "";
+		String processedConditions = "";
 
-        for (String condition :conditions) {
-            processedConditions = condition + " AND ";
-        }
+		for (String condition : conditions) {
+			processedConditions = condition + " AND ";
+		}
 
-        processedConditions = processedConditions + " '1' = '1' ";
+		processedConditions = processedConditions + " '1' = '1' ";
 
-        return this.query(action+" From "+table+" where "+ processedConditions);
-    }
+		return this.query(action + " From " + table + " where " + processedConditions);
+	}
 
-    public List get(String table, ArrayList<String> conditions) {
+	public List get(String table, ArrayList<String> conditions) {
 
-        return this.action(" select * ", table, conditions);
+		return this.action(" select * ", table, conditions);
 
-    }
+	}
 
-    public List insert(String table, HashMap values) {
+	public List insert(String table, HashMap values) {
 
-        // TODO - Refactor to return auto incrment fields with the state of the query in result set
+		// TODO - Refactor to return auto incrment fields with the state of the
+		// query in result set
+		List returnList = null;
 
-        System.out.println("Data adapter insert invoked");
+		System.out.println("Data adapter insert invoked");
 
-        String query = "Insert into "+ table + "(";
+		String query = "Insert into " + table + "(";
 
-        String data = " ) values (";
+		String data = " ) values (";
 
-        Object[] keys = values.keySet().toArray();
+		Object[] keys = values.keySet().toArray();
 
-        for( int i =0; i < keys.length; i++){
+		for (int i = 0; i < keys.length; i++) {
 
-            query = query + keys[i].toString();
+			query = query + keys[i].toString();
 
-            if( values.get(keys[i]) != null) {
-                if (values.get(keys[i]).getClass().equals(String.class)) {
-                    data = data + "'" + values.get(keys[i]) + "'";
-                } else {
-                    data = data + values.get(keys[i]);
-                }
-            }
-            else{
-                data = data + values.get(keys[i]);
-            }
+			if (values.get(keys[i]) != null) {
+				if (values.get(keys[i]).getClass().equals(String.class)) {
+					data = data + "'" + values.get(keys[i]) + "'";
+				} else {
+					data = data + values.get(keys[i]);
+				}
+			} else {
+				data = data + values.get(keys[i]);
+			}
 
-            if( i != (keys.length -1 )){
+			if (i != (keys.length - 1)) {
 
-                query = query + " , ";
+				query = query + " , ";
 
-                data = data + " , ";
-            }
+				data = data + " , ";
+			}
 
-        }
+		}
 
-        query = query + data + " ) ";
+		query = query + data + " ) ";
 
-        System.out.println(query);
+		System.out.println(query);
 
-        try {
-            Statement statement = this.databaseConnection.createStatement();
+		try {
+			Statement statement = this.databaseConnection.createStatement();
 
-            statement.executeUpdate(query, statement.RETURN_GENERATED_KEYS);
+			statement.executeUpdate(query, statement.RETURN_GENERATED_KEYS);
 
-            ResultSet results = statement.getResultSet();
+			ResultSet results = statement.getResultSet();
 
-            return this.resultsToList(results);
+			returnList = resultsToList(results);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+		}
 
-        return null;
-    }
+		// } catch (SQLException e) {
+		// //e.printStackTrace();
+		// System.out.println(e.getClass());
+		//
+		// }
 
-    private List resultsToList(ResultSet results) throws SQLException{
+		catch (MySQLIntegrityConstraintViolationException e) {
+			ArrayList<String> errors = new ArrayList<String>();
 
-        if( results != null) {
-            ResultSetMetaData md = results.getMetaData();
+			errors.add("Duplicate Key");
+			// System.out.println(errors);
+			returnList = errors;
+		}
 
-            int columns = md.getColumnCount();
+		catch (SQLException e) {
+			e.printStackTrace();
 
-            ArrayList list = new ArrayList();
+		}
+		return returnList;
 
-            while (results.next()) {
+	}
 
-                HashMap row = new HashMap(columns);
+	private List resultsToList(ResultSet results) throws SQLException {
 
-                for (int i = 1; i <= columns; ++i) {
+		if (results != null) {
+			ResultSetMetaData md = results.getMetaData();
 
-                    row.put(md.getColumnName(i), results.getObject(i));
+			int columns = md.getColumnCount();
 
-                }
+			ArrayList list = new ArrayList();
 
-                list.add(row);
-            }
+			while (results.next()) {
 
-            return list;
-        }
-        return null;
-    }
+				HashMap row = new HashMap(columns);
+
+				for (int i = 1; i <= columns; ++i) {
+
+					row.put(md.getColumnName(i), results.getObject(i));
+
+				}
+
+				list.add(row);
+			}
+
+			return list;
+		}
+		return null;
+	}
 
 }

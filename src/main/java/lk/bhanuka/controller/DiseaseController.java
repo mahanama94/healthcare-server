@@ -15,67 +15,79 @@ import java.util.List;
 @RestController
 public class DiseaseController {
 
-    private DiseaseDAO diseaseDAO;
+	private DiseaseDAO diseaseDAO;
 
-    private NewDiseaseValidator newDiseaseValidator;
+	private NewDiseaseValidator newDiseaseValidator;
 
-    private UpdateDiseaseValidator updateDiseaseValidator;
+	private UpdateDiseaseValidator updateDiseaseValidator;
 
-    public DiseaseController(){
+	public DiseaseController() {
 
-        this.diseaseDAO = new DiseaseDAO();
+		this.diseaseDAO = new DiseaseDAO();
 
-        this.newDiseaseValidator = new NewDiseaseValidator();
+		this.newDiseaseValidator = new NewDiseaseValidator();
 
-        this.updateDiseaseValidator = new UpdateDiseaseValidator();
-    }
+		this.updateDiseaseValidator = new UpdateDiseaseValidator();
+	}
 
-    @RequestMapping(value = "/diseases", method = RequestMethod.GET)
-    public List getDiseases(){
+	@RequestMapping(value = "/diseases", method = RequestMethod.GET)
+	public List getDiseases() {
 
-        return this.diseaseDAO.diseaseList();
+		return this.diseaseDAO.diseaseList();
 
-    }
+	}
 
-    @RequestMapping(value = "/diseases/search", method = RequestMethod.GET)
-    public List findDiseases(){
+	@RequestMapping(value = "/diseases/search", method = RequestMethod.GET)
+	public List findDiseases() {
 
-        return this.diseaseDAO.diseaseList();
+		return this.diseaseDAO.diseaseList();
 
-    }
+	}
 
-    @RequestMapping(value = "/diseases/{id}", method = RequestMethod.GET)
-    public Disease getDisease(@PathVariable("id") Long id){
+	@RequestMapping(value = "/diseases/{id}", method = RequestMethod.GET)
+	public Disease getDisease(@PathVariable("id") Long id) {
 
-        return this.diseaseDAO.getDisease(id);
+		return this.diseaseDAO.getDisease(id);
 
-    }
+	}
 
-    @RequestMapping(value="/diseases", method = RequestMethod.POST)
-    public HashMap addDisease(HttpServletRequest request){
-        
-        HashMap validated = newDiseaseValidator.validate(request);
-        
-        if (validated.get("error") == null){
-        	Disease newDisease = new Disease(Long.parseLong(request.getParameter("id"),10),
-        									request.getParameter("name"),
-        									request.getParameter("description"),
-        									request.getParameter("treatment"));
-        	
-        	diseaseDAO.addDisease(newDisease);
-        	
-        }
+	@RequestMapping(value = "/diseases", method = RequestMethod.POST)
+	public HashMap addDisease(HttpServletRequest request) {
 
-        // TODO - validate first and add disease to database ( refactor) create disease object and pass to the DAO
-        return validated;
+		HashMap validated = newDiseaseValidator.validate(request);
 
-    }
+		if (validated.get("error") == null) {
+			Disease newDisease = new Disease(Long.parseLong(request.getParameter("id"), 10),
+					request.getParameter("name"), request.getParameter("description"),
+					request.getParameter("treatment"));
 
-    @RequestMapping(value = "/diseases", method = RequestMethod.PUT)
-    public HashMap updateDisease(HttpServletRequest request){
+			// after validation check for DB violations
+			Object violated = diseaseDAO.addDisease(newDisease);
+			// System.out.println(violated.getClass());
 
-        return this.updateDiseaseValidator.validate(request);
+			if (violated instanceof String) {
+				// System.out.println("violated");
+				HashMap error = new HashMap();
+				error.put("error", (String) violated);
+				// System.out.println(error);
+				return error;
+			} else {
+				return (HashMap) violated;
+			}
 
-    }
+		}
+
+		// Disease test = new Disease(1, "some","some","some");
+		// diseaseDAO.addDisease(test);
+		return validated;
+
+	}
+
+	@RequestMapping(value = "/diseases", method = RequestMethod.PUT)
+	public HashMap updateDisease(HttpServletRequest request) {
+
+		return this.updateDiseaseValidator.validate(request);
+
+	}
 
 }

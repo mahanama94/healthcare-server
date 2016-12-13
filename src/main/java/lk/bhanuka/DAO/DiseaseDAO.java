@@ -87,13 +87,18 @@ public class DiseaseDAO extends DAO {
 
 		List test = this.dataService.insert(this.tableName, values);
 
-		if (test.get(0) == "Duplicate Key") {// A list coming from the
-												// mysqladapter class with only
-												// a single element
-			// System.out.println("Duplicate Key");
-			return "Duplicate Key";
-		} else {
-			return disease;
+		if (test != null){
+		
+			if (test.get(0) == "Duplicate Key") {// A list coming from the mysqladapter class with only a single element
+				// System.out.println("Duplicate Key");
+				return "Duplicate Key";
+				
+			}
+			return null;
+			
+		} 
+		else {
+			return values;
 		}
 
 	}
