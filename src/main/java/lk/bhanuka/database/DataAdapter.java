@@ -15,6 +15,8 @@ public interface DataAdapter {
 
     public List<HashMap> get(String table, ArrayList<String> conditions);
 
+    public HashMap update(String table, HashMap vlues, ArrayList<String> conditions);
+
     public HashMap insert(String table, HashMap values);
 
 }

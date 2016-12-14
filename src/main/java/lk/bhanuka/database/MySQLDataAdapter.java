@@ -70,13 +70,24 @@ public class MySQLDataAdapter implements DataAdapter {
 
 	}
 
+
+	public HashMap update(String table, HashMap values, ArrayList<String> conditions) {
+
+		HashMap returnList = new HashMap();
+
+		System.out.println("Data adapter update invoked");
+
+		String query = this.processUpdateQuery(table, values, conditions);
+		return null;
+	}
+
 	public HashMap insert(String table, HashMap values) {
 
 		HashMap returnList = new HashMap();
 
 		System.out.println("Data adapter insert invoked");
 
-		String query = this.processQuery(table, values);
+		String query = this.processInsertQuery(table, values);
 
 		System.out.println(query);
 
@@ -139,7 +150,7 @@ public class MySQLDataAdapter implements DataAdapter {
 		return null;
 	}
 
-	private String processQuery(String table, HashMap values){
+	private String processInsertQuery(String table, HashMap values){
 
 		String query = "Insert into " + table + "(";
 
@@ -173,6 +184,53 @@ public class MySQLDataAdapter implements DataAdapter {
 		query = query + data + " ) ";
 
 		return query;
+	}
+
+	private String processUpdateQuery(String table, HashMap values, ArrayList<String> conditions){
+
+		String query = "update " + table + " set ";
+
+		String data = " ";
+
+		Object[] keys = values.keySet().toArray();
+
+		for (int i = 0; i < keys.length; i++) {
+
+			query = query + keys[i].toString();
+
+			if (values.get(keys[i]) != null) {
+
+				if (values.get(keys[i]).getClass().equals(String.class)) {
+					query = query + " = '" + values.get(keys[i]) + "'";
+				} else {
+					query = query + " = " + values.get(keys[i]);
+				}
+			} else {
+				query = query + " = " + values.get(keys[i]);
+			}
+
+			if( i != keys.length -1){
+				query = query + " , ";
+			}
+
+		}
+
+		String processedConditions = "";
+
+		for (String condition : conditions) {
+
+			processedConditions = condition + " AND ";
+
+		}
+
+		processedConditions = processedConditions + " '1' = '1' ";
+
+		query = query + " where "+ processedConditions;
+
+		System.out.println(query);
+
+		return query;
+
 	}
 
 }

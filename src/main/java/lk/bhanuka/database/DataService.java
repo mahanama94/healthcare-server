@@ -33,4 +33,8 @@ public class DataService implements DataAdapter{
         return this.dataAdapter.insert(table, values);
     }
 
+    public HashMap update(String table, HashMap values, ArrayList<String> conditions){
+        return this.update(table, values, conditions);
+    }
+
 }
