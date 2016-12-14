@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by bhanuka on 12/11/16.
+ * Created by bhanuka on 12/11/16
  */
 public class PatientDAO extends DAO{
 
