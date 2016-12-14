@@ -10,12 +10,12 @@ import java.util.HashMap;
 /**
  * Created by bhanuka on 12/11/16.
  */
-public abstract class Validator {
+public class Validator {
 
     /**
      * ArrayList of required field in the request
      */
-    protected ArrayList<String> required;
+    //protected ArrayList<String> required;
 
     /**
      * Authentication level for a valid request - or more are valid
@@ -34,39 +34,11 @@ public abstract class Validator {
 
     public Validator(){
         this.dataService = new DataService();
-        this.required = new ArrayList<String>();
+        //this.required = new ArrayList<String>();
         this.accessLevel = 0;
         this.databaseCheck = new ArrayList<HashMap>();
     }
-
-    public HashMap validate(HttpServletRequest request){
-
-        HashMap returnResponse = this.checkRequired(request);
-
-        if(returnResponse.get("error") !=null){
-
-            return returnResponse;
-
-        }
-
-        returnResponse = this.authenticate(request);
-
-        if(returnResponse.get("error") != null){
-
-            return returnResponse;
-
-        }
-
-//        returnResponse = this.checkDatabase(request);
-//
-//        if(returnResponse.get("error") != null){
-//
-//            return returnResponse;
-//        }
-
-        return this.convert(request);
-
-    }
+    
 
     protected HashMap authenticate(HttpServletRequest request){
 
@@ -84,11 +56,11 @@ public abstract class Validator {
 
     }
 
-    protected HashMap checkRequired(HttpServletRequest request){
+    protected HashMap checkRequired(HttpServletRequest request, ArrayList<String> required){
 
         HashMap returnResponse = new HashMap();
 
-        for(String requirement : this.required){
+        for(String requirement : required){
 
             if((Boolean)(request.getParameter(requirement) == null)){
 
@@ -102,11 +74,11 @@ public abstract class Validator {
         return returnResponse;
     }
 
-    protected HashMap convert(HttpServletRequest request){
+    protected HashMap convert(HttpServletRequest request, ArrayList<String> required){
 
         HashMap response = new HashMap();
 
-        for(String requirement: this.required){
+        for(String requirement: required){
 
             response.put(requirement, request.getParameter(requirement));
 
@@ -139,4 +111,28 @@ public abstract class Validator {
         return returnResponse;
 
     }
+    
+    
+    //\\ New Addition //\\
+    
+    // TODO: Bhanuka check this
+    
+    public HashMap validate(HttpServletRequest request, ArrayList<String> required){
+
+		HashMap returnResponse = this.checkRequired(request, required);
+
+		System.out.println(returnResponse);
+
+		if (returnResponse.get("error") != null) {
+			return returnResponse;
+		}
+		return convert(request, required);
+	}
+    
+    
+    
+    
+    
+    
+    //\\ New Addition //\\
 }

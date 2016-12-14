@@ -2,10 +2,12 @@ package lk.bhanuka.controller;
 
 import lk.bhanuka.DAO.DiseaseDAO;
 import lk.bhanuka.models.Disease;
-import lk.bhanuka.validators.NewDiseaseValidator;
-import lk.bhanuka.validators.UpdateDiseaseValidator;
+import lk.bhanuka.validators.Validator;
+
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,20 +18,19 @@ import java.util.List;
 public class DiseaseController {
 
 	private DiseaseDAO diseaseDAO;
-
-	private NewDiseaseValidator newDiseaseValidator;
-
-	private UpdateDiseaseValidator updateDiseaseValidator;
+	
+	private Validator newValidator;
+	
+	//private UpdateDiseaseValidator updateDiseaseValidator;
 
 	public DiseaseController() {
 
 		this.diseaseDAO = new DiseaseDAO();
 
-		this.newDiseaseValidator = new NewDiseaseValidator();
-
-		this.updateDiseaseValidator = new UpdateDiseaseValidator();
+		this.newValidator = new Validator();
 	}
 
+	//working
 	@RequestMapping(value = "/diseases", method = RequestMethod.GET)
 	public List getDiseases() {
 
@@ -37,6 +38,7 @@ public class DiseaseController {
 
 	}
 
+	// TODO:
 	@RequestMapping(value = "/diseases/search", method = RequestMethod.GET)
 	public List findDiseases() {
 
@@ -44,6 +46,7 @@ public class DiseaseController {
 
 	}
 
+	//working
 	@RequestMapping(value = "/diseases/{id}", method = RequestMethod.GET)
 	public Disease getDisease(@PathVariable("id") Long id) {
 
@@ -51,10 +54,17 @@ public class DiseaseController {
 
 	}
 
+	//working
 	@RequestMapping(value = "/diseases", method = RequestMethod.POST)
 	public HashMap addDisease(HttpServletRequest request) {
+		
+		ArrayList<String> required = new ArrayList<String>();
+		
+		required.add("name");
+        required.add("description");	
+        required.add("treatment");
 
-		HashMap validated = newDiseaseValidator.validate(request);
+		HashMap validated = newValidator.validate(request, required);
 		
 		if (validated.get("error") == null) {
 			Disease newDisease = new Disease(
@@ -65,11 +75,12 @@ public class DiseaseController {
 		return validated;
 	}
 
+	// TODO:
 	@RequestMapping(value = "/diseases", method = RequestMethod.PUT)
 	public HashMap updateDisease(HttpServletRequest request) {
 		
-		// TODO This is not functioning
-		return this.updateDiseaseValidator.validate(request);
+		//return this.updateDiseaseValidator.validate(request);
+		return null;
 
 	}
 

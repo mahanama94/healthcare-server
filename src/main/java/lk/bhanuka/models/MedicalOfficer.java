@@ -8,7 +8,7 @@ public class MedicalOfficer extends User{
     private String specialization;
 
     public MedicalOfficer(long id, String name){
-        super(id, name);
+        //super(id, name);
     }
 
     public void setSpecialization(String specialization){

@@ -6,11 +6,11 @@ package lk.bhanuka.models;
 public class HealthOfficer extends User {
 
     public HealthOfficer(Long id, String name) {
-        super(id, name);
+        //super(id, name);
     }
 
     public void setProvince(Province province){
-        this.region = province;
+        //this.region = province;
     }
 
     public String getRole() {
@@ -21,5 +21,5 @@ public class HealthOfficer extends User {
         return 10;
     }
 
-    public Province getProvince(){ return (Province)this.region; }
+//    public Province getProvince(){ return (Province)this.region; }
 }

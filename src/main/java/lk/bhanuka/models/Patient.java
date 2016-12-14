@@ -3,36 +3,25 @@ package lk.bhanuka.models;
 /**
  * Created by bhanuka on 12/9/16.
  */
+
 public class Patient extends User{
-
-    
-	private String address;
-
-    public Patient(Long id, String name){
-        super(id, name);
-    }
-
-    public Patient(Long id, String name, String address){
-        super(id, name);
-        this.address = address;
-    }
-    
-    public Patient(Long id, String name, String nic, String dob, Region region){
-    	super(id, name);
+ 
+    public Patient(Long patient_id, String nic, String name, String dob, Long district_id){
+    	id = patient_id;
     	this.nic = nic;
-    	this.dateOfBirth = dob;
-    	this.region = region;
+    	this.name = name;
+    	this.dob = dob;
+    	this.district_id = district_id;
     }
 
-    public String getAddress(){
-        return this.address;
+    public Patient(String nic, String name, String dob, Long district_id){
+    	this.nic = nic;
+    	this.name = name;
+    	this.dob = dob;
+    	this.district_id = district_id;
     }
+    
+    public String getRole() {return "patient";}
 
-    public String getRole() {
-        return "patient";
-    }
-
-    public int getAccessLevel() {
-        return 0;
-    }
+    public int getAccessLevel() {return 0;}
 }

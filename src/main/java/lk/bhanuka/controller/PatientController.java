@@ -2,7 +2,9 @@ package lk.bhanuka.controller;
 
 import lk.bhanuka.DAO.PatientDAO;
 import lk.bhanuka.models.Patient;
-import lk.bhanuka.validators.NewPatientValidator;
+//import lk.bhanuka.validators.NewPatientValidator;
+import lk.bhanuka.validators.Validator;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,15 +21,16 @@ public class PatientController {
 
     private PatientDAO patientDAO;
 
-    private NewPatientValidator newPatientValidator;
+    private Validator newValidator;
 
     public PatientController(){
 
         this.patientDAO = new PatientDAO();
-        this.newPatientValidator = new NewPatientValidator();
+        this.newValidator = new Validator();
 
     }
 
+    // Working
     @RequestMapping( value = "/patients", method = RequestMethod.GET)
     public List getPatients(){
 
@@ -35,6 +38,7 @@ public class PatientController {
 
     }
 
+    // TODO:
     @RequestMapping( value = "/patients/search", method = RequestMethod.GET)
     public List findPatients(){
 
@@ -42,6 +46,7 @@ public class PatientController {
 
     }
 
+    //working
     @RequestMapping(value = "/patients/{id}", method = RequestMethod.GET)
     public Patient getPatient(@PathVariable("id") Long id){
 
@@ -49,22 +54,32 @@ public class PatientController {
 
     }
 
+    //working
     @RequestMapping(value = "/patients", method = RequestMethod.POST)
     public HashMap addPatient(HttpServletRequest request){
+    	
+    	ArrayList<String> required = new ArrayList<String>();
 
-        HashMap validated = this.newPatientValidator.validate(request);
+        required.add("nic");	required.add("name");
+        required.add("dob");	required.add("district_id");
 
-        if(validated.get("error") != null){
-            return validated;
+        HashMap validated = newValidator.validate(request, required);
+        
+        if (validated.get("error") == null) {
+        	
+        	Patient newPatient = new Patient(request.getParameter("nic"),
+        								request.getParameter("name"),
+        								request.getParameter("dob"),
+        								Long.valueOf(request.getParameter("district_id")));
+        						
+        	
+        	return patientDAO.addPatient(newPatient);
         }
-
-        Patient newPatient = new Patient(Long.parseLong("1", 10), request.getParameter("name").toString());
-
-        HashMap response = this.patientDAO.addPatient(newPatient);
-
-        return response;
+        return validated;
+        
     }
-
+    
+    // TODO:
     @RequestMapping(value = "/patients", method = RequestMethod.PUT)
     public HashMap updatePatient(HttpServletRequest request){
 

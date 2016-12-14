@@ -10,16 +10,24 @@ import java.util.List;
  */
 public class PatientDAO extends DAO{
 
-    private String name;
+	private String nic;
+	
+	private String name;
 
     private String dob;
+    
+    private String district_id;
+   
 
     public PatientDAO(){
         super();
         this.tableName = " patient ";
         this.primaryKey = "patient_id";
+        
+        this.nic = "nic";
         this.name = "NAME";
         this.dob = "dob";
+        this.district_id = "district_id";
     }
 
     public List<Patient> getPatients(){
@@ -39,9 +47,7 @@ public class PatientDAO extends DAO{
             Patient patient = this.createPatient(element);
 
             return patient;
-
         }
-
         return null;
     }
 
@@ -50,8 +56,12 @@ public class PatientDAO extends DAO{
         ArrayList<Patient> patients = new ArrayList<Patient>();
 
         List<HashMap> results = this.dataService.get(this.tableName, conditions);
+        
+        //System.out.println(results);
 
         for(HashMap element : results){
+        	
+        	//System.out.println(element.get("nic"));
 
             Patient patient = this.createPatient(element);
 
@@ -66,9 +76,11 @@ public class PatientDAO extends DAO{
     public HashMap addPatient(Patient patient){
 
         HashMap values = new HashMap();
-
-        values.put(this.name, patient.getName());
-        values.put(this.dob, patient.getDateOfBirth());
+        
+        values.put(nic, patient.getNic());
+        values.put(name, patient.getName());
+        values.put(dob, patient.getDateOfBirth());
+        values.put(district_id, patient.getDistrict_id());
 
         HashMap response = this.dataService.insert(this.tableName, values);
 
@@ -89,12 +101,18 @@ public class PatientDAO extends DAO{
         return results;
 
     }
+    
 
-    private Patient createPatient(HashMap element){
+    private Patient createPatient(@SuppressWarnings("rawtypes") HashMap element){
 
-        return new Patient(Long.valueOf(element.get(this.primaryKey).toString()), element.get("NAME").toString());
+        Patient new_patient =  new Patient(Long.valueOf(element.get(this.primaryKey).toString()), 
+        								element.get(nic).toString(),
+        								element.get(name).toString(),
+        								element.get(dob).toString(),
+										Long.valueOf(element.get(district_id).toString()));
 
-    }
+		return new_patient;
+     }
 
 
 
