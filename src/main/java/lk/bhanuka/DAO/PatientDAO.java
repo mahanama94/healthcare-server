@@ -10,10 +10,16 @@ import java.util.List;
  */
 public class PatientDAO extends DAO{
 
+    private String name;
+
+    private String dob;
+
     public PatientDAO(){
         super();
         this.tableName = " patient ";
         this.primaryKey = "patient_id";
+        this.name = "NAME";
+        this.dob = "dob";
     }
 
     public List<Patient> getPatients(){
@@ -56,6 +62,33 @@ public class PatientDAO extends DAO{
         }
 
         return patients;
+
+    }
+
+    public HashMap addPatient(Patient patient){
+
+        HashMap values = new HashMap();
+
+        values.put(this.name, patient.getName());
+        values.put(this.dob, patient.getDateOfBirth());
+
+        HashMap response = this.dataService.insert(this.tableName, values);
+
+        HashMap results = new HashMap();
+
+        if(response.get("error") == null){
+
+            response.put(this.primaryKey, response.get("GENERATED_KEY"));
+
+            results.put("patient", this.createPatient(response));
+
+        }
+        else{
+
+            results.put("error", response.get("error"));
+        }
+
+        return results;
 
     }
 
