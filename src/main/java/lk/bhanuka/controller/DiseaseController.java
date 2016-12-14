@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by bhanuka on 12/9/16.
+ * Created by bhanuka on 12/9/16
  */
 @RestController
 public class DiseaseController {
