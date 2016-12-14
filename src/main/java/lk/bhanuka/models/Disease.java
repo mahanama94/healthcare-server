@@ -1,11 +1,10 @@
 package lk.bhanuka.models;
 
 /**
- * Created by bhanuka on 12/9/16.
+ * Created by bhanuka on 12/9/16
  */
 public class Disease {
 
-    //private Long id;
 	private Long id;
 	
     private String name;
@@ -32,19 +31,16 @@ public class Disease {
     }
 
     public void setId(Long id){ this.id = id; }
+    
     public void setTreatment(String treatment){ this.treatment = treatment; }
-
+    
     public void setDescription(String description){ this.description = description; }
-
-    public long getId(){
-        return id;
-    }
-
-    public String getName(){
-        return this.name;
-    }
-
+    
+    public long getId(){return id;}
+    
+    public String getName(){return this.name;}
+    
     public String getDescription(){ return this.description; }
-
+    
     public String getTreatment(){ return this.treatment; }
-}
+ }

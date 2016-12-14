@@ -5,7 +5,8 @@ package lk.bhanuka.models;
  */
 public class Patient extends User{
 
-    private String address;
+    
+	private String address;
 
     public Patient(Long id, String name){
         super(id, name);
@@ -14,6 +15,13 @@ public class Patient extends User{
     public Patient(Long id, String name, String address){
         super(id, name);
         this.address = address;
+    }
+    
+    public Patient(Long id, String name, String nic, String dob, Region region){
+    	super(id, name);
+    	this.nic = nic;
+    	this.dateOfBirth = dob;
+    	this.region = region;
     }
 
     public String getAddress(){
