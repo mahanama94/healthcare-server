@@ -2,6 +2,7 @@ package lk.bhanuka.controller;
 
 import lk.bhanuka.DAO.PatientDAO;
 import lk.bhanuka.models.Patient;
+import lk.bhanuka.validators.NewPatientValidator;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +19,13 @@ public class PatientController {
 
     private PatientDAO patientDAO;
 
+    private NewPatientValidator newPatientValidator;
+
     public PatientController(){
+
         this.patientDAO = new PatientDAO();
+        this.newPatientValidator = new NewPatientValidator();
+
     }
 
     @RequestMapping( value = "/patients", method = RequestMethod.GET)
@@ -46,7 +52,17 @@ public class PatientController {
     @RequestMapping(value = "/patients", method = RequestMethod.POST)
     public HashMap addPatient(HttpServletRequest request){
 
-        return null;
+        HashMap validated = this.newPatientValidator.validate(request);
+
+        if(validated.get("error") != null){
+            return validated;
+        }
+
+        Patient newPatient = new Patient(Long.parseLong("1", 10), request.getParameter("name").toString());
+
+        HashMap response = this.patientDAO.addPatient(newPatient);
+
+        return response;
     }
 
     @RequestMapping(value = "/patients", method = RequestMethod.PUT)
