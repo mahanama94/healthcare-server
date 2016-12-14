@@ -76,30 +76,31 @@ public class DiseaseDAO extends DAO {
 
 	}
 
-	public Object addDisease(Disease disease) {
+	public HashMap addDisease(Disease disease) {
 
 		HashMap values = new HashMap();
 
-		//values.put(this.primaryKey, disease.getId());
 		values.put(this.name, disease.getName());
 		values.put(this.description, disease.getDescription());
 		values.put(this.treatment, disease.getTreatment());
 
-		List test = this.dataService.insert(this.tableName, values);
+		HashMap response = this.dataService.insert(this.tableName, values);
 
-		if (test != null){
-		
-			if (test.get(0) == "Duplicate Key") {// A list coming from the mysqladapter class with only a single element
-				// System.out.println("Duplicate Key");
-				return "Duplicate Key";
-				
-			}
-			return null;
-			
-		} 
-		else {
-			return values;
+		HashMap results =  new HashMap();
+
+		if(response.get("error") == null){
+
+			response.put(this.primaryKey, response.get("GENERATED_KEY"));
+
+
+			results.put("disease",this.createDisease(response));
 		}
+		else{
+
+			results.put("error", response.get("error"));
+
+		}
+		return results;
 
 	}
 
@@ -107,6 +108,7 @@ public class DiseaseDAO extends DAO {
 
 		Disease newDisease = new Disease(Long.valueOf(element.get(this.primaryKey).toString()),
 				element.get(this.name).toString());
+
 		try {
 			newDisease.setDescription(element.get(this.description).toString());
 

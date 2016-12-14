@@ -31,6 +31,7 @@ public class Disease {
         this.treatment = treatment;
     }
 
+    public void setId(Long id){ this.id = id; }
     public void setTreatment(String treatment){ this.treatment = treatment; }
 
     public void setDescription(String description){ this.description = description; }

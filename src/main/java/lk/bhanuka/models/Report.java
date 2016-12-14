@@ -17,6 +17,11 @@ public class Report {
         this.disease = disease;
     }
 
+    public Report(String title, MedicalOfficer medicalOfficer){
+        this.title = title;
+        this.medicalOfficer = medicalOfficer;
+    }
+
     public MedicalOfficer getMedicalOfficer(){
         return this.medicalOfficer;
     }

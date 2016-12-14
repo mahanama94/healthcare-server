@@ -70,13 +70,76 @@ public class MySQLDataAdapter implements DataAdapter {
 
 	}
 
-	public List insert(String table, HashMap values) {
+	public HashMap insert(String table, HashMap values) {
 
-		// TODO - Refactor to return auto incrment fields with the state of the
-		// query in result set - use database approach
-		List returnList = null;
+		HashMap returnList = new HashMap();
 
 		System.out.println("Data adapter insert invoked");
+
+		String query = this.processQuery(table, values);
+
+		System.out.println(query);
+
+		try {
+			Statement statement = this.databaseConnection.createStatement();
+
+			statement.executeUpdate(query, statement.RETURN_GENERATED_KEYS);
+
+			ResultSet results = statement.getGeneratedKeys();
+
+			returnList = resultsToList(results).get(0);
+
+			returnList.putAll(values);
+
+			System.out.println(returnList.toString());
+
+		}
+		catch (MySQLIntegrityConstraintViolationException e) {
+
+			returnList.put("error", "duplicate values");
+
+		}
+		catch (SQLException e) {
+
+			e.printStackTrace();
+
+			returnList.put("error", "internal error");
+		}
+		finally {
+			return returnList;
+		}
+
+
+	}
+
+	private List<HashMap> resultsToList(ResultSet results) throws SQLException {
+
+		if (results != null) {
+			ResultSetMetaData md = results.getMetaData();
+
+			int columns = md.getColumnCount();
+
+			ArrayList list = new ArrayList();
+
+			while (results.next()) {
+
+				HashMap row = new HashMap(columns);
+
+				for (int i = 1; i <= columns; ++i) {
+
+					row.put(md.getColumnName(i), results.getObject(i));
+
+				}
+
+				list.add(row);
+			}
+
+			return list;
+		}
+		return null;
+	}
+
+	private String processQuery(String table, HashMap values){
 
 		String query = "Insert into " + table + "(";
 
@@ -109,60 +172,7 @@ public class MySQLDataAdapter implements DataAdapter {
 
 		query = query + data + " ) ";
 
-		System.out.println(query);
-
-		try {
-			Statement statement = this.databaseConnection.createStatement();
-
-			statement.executeUpdate(query, statement.RETURN_GENERATED_KEYS);
-
-			ResultSet results = statement.getResultSet();
-
-			returnList = resultsToList(results);
-
-		}
-
-		catch (MySQLIntegrityConstraintViolationException e) {
-			ArrayList<String> errors = new ArrayList<String>();
-
-			errors.add("Duplicate Key");
-			// System.out.println(errors);
-			returnList = errors;
-		}
-
-		catch (SQLException e) {
-			e.printStackTrace();
-
-		}
-		return returnList;
-
-	}
-
-	private List resultsToList(ResultSet results) throws SQLException {
-
-		if (results != null) {
-			ResultSetMetaData md = results.getMetaData();
-
-			int columns = md.getColumnCount();
-
-			ArrayList list = new ArrayList();
-
-			while (results.next()) {
-
-				HashMap row = new HashMap(columns);
-
-				for (int i = 1; i <= columns; ++i) {
-
-					row.put(md.getColumnName(i), results.getObject(i));
-
-				}
-
-				list.add(row);
-			}
-
-			return list;
-		}
-		return null;
+		return query;
 	}
 
 }

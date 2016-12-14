@@ -29,7 +29,7 @@ public class DataService implements DataAdapter{
 
     }
 
-    public List insert(String table, HashMap values) {
+    public HashMap insert(String table, HashMap values) {
         return this.dataAdapter.insert(table, values);
     }
 
