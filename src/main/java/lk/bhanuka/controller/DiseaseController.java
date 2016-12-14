@@ -55,36 +55,14 @@ public class DiseaseController {
 	public HashMap addDisease(HttpServletRequest request) {
 
 		HashMap validated = newDiseaseValidator.validate(request);
-//
-//		if (validated.get("error") == null) {
-////			Disease newDisease = new Disease(Long.parseLong(request.getParameter("id"), 10),
-////					request.getParameter("name"), request.getParameter("description"),
-////					request.getParameter("treatment"));
-//
-//			Disease newDisease = new Disease(
-//					request.getParameter("name"), request.getParameter("description"),
-//					request.getParameter("treatment"));
-//
-//
-//			// after validation check for DB violations
-//			Object violated = diseaseDAO.addDisease(newDisease);
-//			// System.out.println(violated.getClass());
-//
-//			if (violated instanceof String) {
-//				// System.out.println("violated");
-//				HashMap error = new HashMap();
-//				error.put("error", (String) violated);
-//				// System.out.println(error);
-//				return error;
-//			} else {
-//				return (HashMap) violated;
-//			}
-//
-//		}
-//		return validated;
-
-		Disease newDisease = new Disease(4, request.getParameter("name"), request.getParameter("description"), request.getParameter("treatment"));
-		return this.diseaseDAO.addDisease(newDisease);
+		
+		if (validated.get("error") == null) {
+			Disease newDisease = new Disease(
+					request.getParameter("name"), request.getParameter("description"),
+					request.getParameter("treatment"));
+			return this.diseaseDAO.addDisease(newDisease);
+		}
+		return validated;
 	}
 
 	@RequestMapping(value = "/diseases", method = RequestMethod.PUT)

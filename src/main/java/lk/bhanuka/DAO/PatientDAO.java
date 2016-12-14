@@ -27,6 +27,8 @@ public class PatientDAO extends DAO{
         conditions.add(this.primaryKey+ " = "+ id.toString());
 
         List<HashMap> results = this.dataService.get(this.tableName, conditions);
+        
+        System.out.println(results);
 
         for(HashMap element : results){
 
@@ -59,7 +61,11 @@ public class PatientDAO extends DAO{
 
     private Patient createPatient(HashMap element){
 
-        return new Patient(Long.valueOf(element.get(this.primaryKey).toString()), element.get("NAME").toString());
+        return new Patient(Long.valueOf(element.get(this.primaryKey).toString()), 
+        								element.get("NAME").toString(),
+        								element.get("nic").toString(),
+        								
+        								);
 
     }
 
