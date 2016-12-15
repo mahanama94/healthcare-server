@@ -26,10 +26,16 @@ public class ReportController {
 
     }
 
-    @RequestMapping( value = "/reports/{id}", method = RequestMethod.GET)
-    public Report getReport(@PathVariable("id") Long id){
+    @RequestMapping( value = "/reports/{patientId}/{medicalOfficerId}/{diseaseId}", method = RequestMethod.GET)
+    public Report getReport(@PathVariable("patientId") Long patientId, @PathVariable("medicalOfficerId") Long medicalOfficerId, @PathVariable("diseaseId") Long diseaseId){
 
-        return this.reportDAO.getReport(id);
+        System.out.println(patientId);
+
+        System.out.println(medicalOfficerId);
+
+        System.out.println(diseaseId);
+
+        return null;
 
     }
 }

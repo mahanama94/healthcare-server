@@ -15,22 +15,16 @@ import java.util.List;
  * Created by bhanuka on 12/9/16
  */
 @RestController
-public class DiseaseController {
+public class DiseaseController extends Controller{
 
 	private DiseaseDAO diseaseDAO;
-	
-	private Validator newValidator;
-	
-	//private UpdateDiseaseValidator updateDiseaseValidator;
 
 	public DiseaseController() {
-
+		super();
 		this.diseaseDAO = new DiseaseDAO();
 
-		this.newValidator = new Validator();
 	}
 
-	//working
 	@RequestMapping(value = "/diseases", method = RequestMethod.GET)
 	public List getDiseases() {
 
@@ -54,7 +48,6 @@ public class DiseaseController {
 
 	}
 
-	//working
 	@RequestMapping(value = "/diseases", method = RequestMethod.POST)
 	public HashMap addDisease(HttpServletRequest request) {
 		
@@ -64,7 +57,7 @@ public class DiseaseController {
         required.add("description");	
         required.add("treatment");
 
-		HashMap validated = newValidator.validate(request, required);
+		HashMap validated = this.validator.validate(request, required);
 		
 		if (validated.get("error") == null) {
 			Disease newDisease = new Disease(
@@ -78,9 +71,25 @@ public class DiseaseController {
 	// TODO:
 	@RequestMapping(value = "/diseases", method = RequestMethod.PUT)
 	public HashMap updateDisease(HttpServletRequest request) {
-		
-		//return this.updateDiseaseValidator.validate(request);
-		return null;
+
+		ArrayList<String> required = new ArrayList<String>();
+
+		required.add("id");
+		required.add("name");
+		required.add("description");
+		required.add("treatment");
+
+		if(this.validator.validate(request, required).get("error") == null){
+			Disease disease = new Disease(Long.parseLong(request.getParameter("id")),
+					request.getParameter("name"), request.getParameter("description"),
+					request.getParameter("treatment"));
+
+			return this.diseaseDAO.updateDisease(disease);
+		}
+		else {
+
+			return this.validator.validate(request, required);
+		}
 
 	}
 

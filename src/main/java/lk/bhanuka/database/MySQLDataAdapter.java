@@ -78,7 +78,36 @@ public class MySQLDataAdapter implements DataAdapter {
 		System.out.println("Data adapter update invoked");
 
 		String query = this.processUpdateQuery(table, values, conditions);
-		return null;
+
+		try {
+			Statement statement = this.databaseConnection.createStatement();
+
+			statement.executeUpdate(query);
+
+//			ResultSet results = statement.getGeneratedKeys();
+//
+//			returnList = resultsToList(results).get(0);
+
+			returnList.putAll(values);
+
+			System.out.println(returnList.toString());
+
+		}
+		catch (MySQLIntegrityConstraintViolationException e) {
+
+			returnList.put("error", "duplicate values");
+
+		}
+		catch (SQLException e) {
+
+			e.printStackTrace();
+
+			returnList.put("error", "internal error");
+		}
+		finally {
+			return returnList;
+		}
+
 	}
 
 	public HashMap insert(String table, HashMap values) {

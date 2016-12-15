@@ -104,6 +104,44 @@ public class DiseaseDAO extends DAO {
 
 	}
 
+	public HashMap updateDisease(Disease disease){
+
+		HashMap values = new HashMap();
+		values.put(this.description, disease.getDescription());
+		values.put(this.treatment, disease.getTreatment());
+
+
+		ArrayList conditions = new ArrayList<>();
+		conditions.add(this.primaryKey + " = "+ disease.getId());
+		conditions.add(this.name+ " = '"+disease.getName()+"' ");
+
+		System.out.println("conditions ");
+		System.out.println(conditions.toString());
+
+		HashMap response = this.dataService.update(this.tableName, values, conditions);
+
+		HashMap results = new HashMap();
+
+		System.out.println(response.toString());
+
+		if(response.get("error") == null){
+
+			response.put(this.primaryKey, disease.getId());
+			response.put(this.name, disease.getName());
+
+			results.put("disease", this.createDisease(response));
+
+		}
+
+		else {
+
+			results.put("error", response.get("error"));
+
+		}
+
+		return results;
+	}
+
 	private Disease createDisease(HashMap element) {
 
 		Disease newDisease = new Disease(Long.valueOf(element.get(this.primaryKey).toString()),
