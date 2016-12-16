@@ -32,12 +32,22 @@ public class DiseaseController extends Controller{
 
 	}
 
-	// TODO: implement Search method
 	@RequestMapping(value = "/diseases/search", method = RequestMethod.GET)
-	public List findDiseases() {
+	public List findDiseases(HttpServletRequest request) {
+		
+		
+		HashMap params = new HashMap();
+		
+		params.put("name", request.getParameter("name"));
+		params.put("description", request.getParameter("description"));
+		
+				
+		ArrayList conditions = new ArrayList();
 
-		return this.diseaseDAO.findDiseases(null);
-
+		conditions.add("disease_name" + " LIKE '%"+ params.get("name") +"%'");
+		conditions.add("description" + " LIKE '%"+ params.get("description") +"%'");
+		
+		return diseaseDAO.findDiseases(conditions);
 	}
 
 	@RequestMapping(value = "/diseases/{id}", method = RequestMethod.GET)
