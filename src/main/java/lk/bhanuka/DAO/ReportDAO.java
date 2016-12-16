@@ -23,6 +23,7 @@ public class ReportDAO extends DAO {
 
     }
 
+    // TODO modify with new primary keys
     public Report getReport(Long id){
 
         ArrayList<String> conditions = new ArrayList<String>();
@@ -63,6 +64,7 @@ public class ReportDAO extends DAO {
         return reports;
     }
 
+    // TODO implement add method
     public Report addReport(Report report){
 
         // Perform database operations with this.dataService

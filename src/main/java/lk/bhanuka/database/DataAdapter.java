@@ -9,14 +9,14 @@ import java.util.List;
  */
 public interface DataAdapter {
 
-    public List<HashMap> query(String query);
+    List<HashMap> query(String query);
 
-    public List<HashMap> action(String action, String table, ArrayList<String> conditions);
+    List<HashMap> action(String action, String table, ArrayList<String> conditions);
 
-    public List<HashMap> get(String table, ArrayList<String> conditions);
+    List<HashMap> get(String table, ArrayList<String> conditions);
 
-    public HashMap update(String table, HashMap vlues, ArrayList<String> conditions);
+    HashMap update(String table, HashMap values, ArrayList<String> conditions);
 
-    public HashMap insert(String table, HashMap values);
+    HashMap insert(String table, HashMap values);
 
 }

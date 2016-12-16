@@ -55,18 +55,21 @@ public class MySQLDataAdapter implements DataAdapter {
 
 		String processedConditions = "";
 
-		if(conditions.size() != 0){
+		if(conditions != null){
 
-			processedConditions = conditions.get(0);
+			if(conditions.size() != 0){
 
-			for(int i =1; i < conditions.size(); i++){
+				processedConditions = conditions.get(0);
 
-				processedConditions = processedConditions + " AND " + conditions.get(i);
+				for(int i =1; i < conditions.size(); i++){
+
+					processedConditions = processedConditions + " AND " + conditions.get(i);
+				}
 			}
-		}
-		else{
+			else{
 
-			processedConditions = " '1' = '1' ";
+				processedConditions = " '1' = '1' ";
+			}
 		}
 
 		return this.query(action + " From " + table + " where " + processedConditions);

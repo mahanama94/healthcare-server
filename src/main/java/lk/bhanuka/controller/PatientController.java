@@ -30,7 +30,6 @@ public class PatientController {
 
     }
 
-    // Working
     @RequestMapping( value = "/patients", method = RequestMethod.GET)
     public List getPatients(){
 
@@ -38,7 +37,7 @@ public class PatientController {
 
     }
 
-    // TODO:
+    // TODO - implement search
     @RequestMapping( value = "/patients/search", method = RequestMethod.GET)
     public List findPatients(){
 
@@ -46,7 +45,6 @@ public class PatientController {
 
     }
 
-    //working
     @RequestMapping(value = "/patients/{id}", method = RequestMethod.GET)
     public Patient getPatient(@PathVariable("id") Long id){
 
@@ -54,7 +52,6 @@ public class PatientController {
 
     }
 
-    //working
     @RequestMapping(value = "/patients", method = RequestMethod.POST)
     public HashMap addPatient(HttpServletRequest request){
     	
@@ -79,7 +76,7 @@ public class PatientController {
         
     }
     
-    // TODO:
+    // TODO: implement update
     @RequestMapping(value = "/patients", method = RequestMethod.PUT)
     public HashMap updatePatient(HttpServletRequest request){
 

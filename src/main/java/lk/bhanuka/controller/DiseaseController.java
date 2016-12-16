@@ -32,15 +32,14 @@ public class DiseaseController extends Controller{
 
 	}
 
-	// TODO:
+	// TODO: implement Search method
 	@RequestMapping(value = "/diseases/search", method = RequestMethod.GET)
 	public List findDiseases() {
 
-		return this.diseaseDAO.diseaseList();
+		return this.diseaseDAO.findDiseases(null);
 
 	}
 
-	//working
 	@RequestMapping(value = "/diseases/{id}", method = RequestMethod.GET)
 	public Disease getDisease(@PathVariable("id") Long id) {
 
@@ -68,7 +67,6 @@ public class DiseaseController extends Controller{
 		return validated;
 	}
 
-	// TODO:
 	@RequestMapping(value = "/diseases", method = RequestMethod.PUT)
 	public HashMap updateDisease(HttpServletRequest request) {
 
