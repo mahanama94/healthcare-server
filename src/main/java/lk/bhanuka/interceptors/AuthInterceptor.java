@@ -8,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Created by bhanuka on 12/11/16.
@@ -44,7 +45,11 @@ public class AuthInterceptor implements HandlerInterceptor{
     }
 
     private void handleNonAuthenticated(HttpServletResponse response){
-        // TODO - Handle non authenticated requests
+        try {
+            response.sendError(401, "Not authorized");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
