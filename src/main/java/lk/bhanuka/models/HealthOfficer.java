@@ -5,7 +5,7 @@ package lk.bhanuka.models;
  */
 public class HealthOfficer extends User {
 
-    public HealthOfficer(Long id, String name) {
+    public HealthOfficer(long id, String name) {
         //super(id, name);
     }
 

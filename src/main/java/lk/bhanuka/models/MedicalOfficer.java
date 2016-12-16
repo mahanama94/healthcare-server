@@ -11,6 +11,7 @@ public class MedicalOfficer extends User{
         //super(id, name);
     }
 
+
     public void setSpecialization(String specialization){
 
         this.specialization = specialization;

@@ -6,7 +6,7 @@ package lk.bhanuka.models;
 
 public class Patient extends User{
  
-    public Patient(Long patient_id, String nic, String name, String dob, Long district_id){
+    public Patient(long patient_id, String nic, String name, String dob, long district_id){
     	id = patient_id;
     	this.nic = nic;
     	this.name = name;
