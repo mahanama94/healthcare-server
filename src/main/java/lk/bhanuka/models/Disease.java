@@ -43,4 +43,13 @@ public class Disease {
     public String getDescription(){ return this.description; }
     
     public String getTreatment(){ return this.treatment; }
+
+    // TODO: For testing
+	@Override
+	public String toString() {
+		return "Disease [id=" + id + ", name=" + name + ", description=" + description + ", treatment=" + treatment
+				+ "]";
+	}
+    
+    
  }

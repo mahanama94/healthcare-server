@@ -58,6 +58,9 @@ public class DiseaseDAO extends DAO {
 
 	}
 
+	
+
+
 	public List<Disease> findDiseases(ArrayList conditions) {
 
 		ArrayList<Disease> diseases = new ArrayList<Disease>();
@@ -141,6 +144,8 @@ public class DiseaseDAO extends DAO {
 
 		return results;
 	}
+	
+	
 
 	private Disease createDisease(HashMap element) {
 
