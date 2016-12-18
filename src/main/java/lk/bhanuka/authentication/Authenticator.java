@@ -10,8 +10,11 @@ public class Authenticator {
 
     private ArrayList<String> guest;
 
+    private TokenGenerator tokenGenerator;
+
     public Authenticator(){
         this.guest = new ArrayList<>();
+        this.tokenGenerator = new TokenGenerator();
         this.guest.add("/login");
         this.guest.add("/signup");
     }
@@ -25,13 +28,13 @@ public class Authenticator {
         }
 
         if(request.getParameter("token") == null){
-
-            // TODO decrypt token and retrieve user and details
-
             return false;
         }
 
-        return true;
+        if(Auth.login(request.getParameter("token"))){
+            return true;
+        }
+        return false;
 
     }
 

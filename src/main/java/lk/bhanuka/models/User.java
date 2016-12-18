@@ -9,6 +9,8 @@ public abstract class User {
 
     protected Long id;
 
+    protected String email;
+
     protected String nic;
 
     protected String name;
@@ -26,7 +28,9 @@ public abstract class User {
     
     public abstract String getRole();
     
-    
+    public String getEmail(){ return this.email; }
+
+    public String setEmail(String email){ return this.email = email; }
     // Basic getters and setters \\
     public Long getId() {return id;}
 

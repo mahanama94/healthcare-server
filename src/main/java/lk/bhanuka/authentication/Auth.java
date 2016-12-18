@@ -1,5 +1,6 @@
 package lk.bhanuka.authentication;
 
+import lk.bhanuka.DAO.UserDAO;
 import lk.bhanuka.models.HealthOfficer;
 import lk.bhanuka.models.User;
 
@@ -10,7 +11,9 @@ public class Auth {
 
     private static User user = null;
 
-    public static boolean login(User user){
+    private static UserDAO userDAO = new UserDAO();
+
+    private static boolean login(User user){
         if(user != null){
             Auth.user = user;
             return true;
@@ -19,16 +22,28 @@ public class Auth {
     }
 
     public static boolean checkAuth(){
-//        if(Auth.user == null){
-//            return false;
-//        }
+        if(Auth.user == null){
+            return false;
+        }
         return true;
     }
 
     public static User getUser(){
+        return Auth.user;
+    }
 
-        return new HealthOfficer((long) 15, "some name");
+    public static boolean login(String token){
 
-        //return Auth.user;
+        System.out.println(token);
+
+        String email = TokenGenerator.getEmail(token);
+        System.out.println("email : " + email);
+        if(Auth.userDAO.getUser(email)==null){
+            return false;
+        }
+
+        Auth.login(Auth.userDAO.getUser(email));
+
+        return true;
     }
 }

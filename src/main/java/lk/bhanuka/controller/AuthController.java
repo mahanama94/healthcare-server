@@ -1,6 +1,8 @@
 package lk.bhanuka.controller;
 
 import lk.bhanuka.DAO.UserDAO;
+import lk.bhanuka.authentication.Auth;
+import lk.bhanuka.authentication.TokenGenerator;
 import lk.bhanuka.models.User;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +24,11 @@ public class AuthController extends Controller {
         this.userDAO = new UserDAO();
     }
 
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public User user(){
+        return Auth.getUser();
+    }
+
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public HashMap login(HttpServletRequest request){
 
@@ -36,15 +43,20 @@ public class AuthController extends Controller {
             return validated;
         }
 
-
         User user = this.userDAO.getUser(request.getParameter("email").toString(),
                 request.getParameter( "password").toString());
 
         HashMap response = new HashMap();
 
-        response.put("user", user);
+        if(user == null ) {
+            response.put("user", "Not Authenticated");
+            response.put("status", "fail");
 
-//        response.put("request", request.getParameter());
+        }
+        else {
+            response.put("status", "success");
+            response.put("token", TokenGenerator.createToken(user.getId(), user.getEmail()));
+        }
         return response;
     }
 

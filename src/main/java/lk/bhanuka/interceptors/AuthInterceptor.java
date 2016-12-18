@@ -25,6 +25,8 @@ public class AuthInterceptor implements HandlerInterceptor{
 
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
+        response.setContentType("application/json");
+
         if( ! this.authenticator.checkAuth(request)){
 
             this.handleNonAuthenticated(response);
