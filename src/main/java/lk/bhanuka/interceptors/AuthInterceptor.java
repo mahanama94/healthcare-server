@@ -47,9 +47,13 @@ public class AuthInterceptor implements HandlerInterceptor{
     }
 
     private void handleNonAuthenticated(HttpServletResponse response){
+
         try {
+            response.setContentType("application/json");
             response.sendError(401, "Not authorized");
-        } catch (IOException e) {
+        }
+
+        catch (IOException e) {
             e.printStackTrace();
         }
     }

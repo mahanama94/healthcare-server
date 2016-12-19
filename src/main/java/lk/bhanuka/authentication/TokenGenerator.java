@@ -1,5 +1,6 @@
 package lk.bhanuka.authentication;
 
+import com.sun.org.apache.xml.internal.security.c14n.implementations.Canonicalizer20010315ExclWithComments;
 import io.jsonwebtoken.*;
 
 import java.io.UnsupportedEncodingException;
@@ -32,9 +33,12 @@ public class TokenGenerator {
 
             return claims.getBody().get("email").toString();
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            return null;
+            //e.printStackTrace();
         }
-        return null;
+        catch (Exception e){
+            return null;
+        }
 
     }
 
@@ -46,12 +50,14 @@ public class TokenGenerator {
             return Long.parseLong(claims.getBody().get("id").toString());
 
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            return -1;
         }
         catch (Exception e){
-            e.printStackTrace();
+            return -1;
+            //e.printStackTrace();
         }
-        return -1;
+
     }
 
 }

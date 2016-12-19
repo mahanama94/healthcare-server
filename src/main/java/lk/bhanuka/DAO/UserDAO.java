@@ -61,6 +61,13 @@ public class UserDAO extends DAO {
         return null;
     }
 
+    public User createUser(User user){
+
+        // TODO - Connect with database and create user
+
+        return user;
+    }
+
     private User createUser(HashMap element){
 
         System.out.println(element.toString());

@@ -67,6 +67,8 @@ public class AuthController extends Controller {
 
         required.add("email");
         required.add("password");
+        required.add("city");
+        required.add("phone");
 
         HashMap validated = this.validator.validate(request, required);
 
