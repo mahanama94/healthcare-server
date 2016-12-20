@@ -19,6 +19,8 @@ public class MedicalOfficerDAO extends DAO{
 
     private String specialization = "specialization";
 
+    private String district = "district_id";
+
     public MedicalOfficerDAO(){
         super();
         this.tableName = "medical_officer";
@@ -35,7 +37,7 @@ public class MedicalOfficerDAO extends DAO{
 
         ArrayList<String> conditions = new ArrayList<String>();
 
-        conditions.add( this.primaryKey+"  = "+ this.nic);
+        conditions.add( this.primaryKey+"  = '"+ nic+"'");
 
         List<HashMap> results = this.dataService.get(this.tableName, conditions );
 
@@ -97,14 +99,52 @@ public class MedicalOfficerDAO extends DAO{
 
     }
 
-    private MedicalOfficer createMedicalOfficer(HashMap element){
+    public HashMap addMedcicalOfficer(HashMap credentials){
 
-        return new MedicalOfficer(
+        HashMap values = new HashMap();
+
+        values.put(nic, credentials.get("nic").toString());
+        values.put(name, credentials.get("name"));
+        values.put(dob, credentials.get("dob"));
+        values.put("pwd" , credentials.get("password"));
+        values.put(this.district, credentials.get("district_id"));
+        values.put("role", "medical_officer");
+        values.put(this.specialization,credentials.get("specialization"));
+        System.out.println(credentials.toString());
+        System.out.println("values : " + values.toString());
+        HashMap response = this.dataService.insert(this.tableName, values);
+
+        HashMap results = new HashMap();
+
+        if(response.get("error") == null ){
+
+            results.put("medicalOfficer", this.getMedicalOfficer(credentials.get("nic").toString()));
+
+        }
+        else{
+
+            results.put("error", response.get("error"));
+
+        }
+
+        System.out.println(results.toString());
+        return results;
+
+    }
+
+    private MedicalOfficer createMedicalOfficer(HashMap element){
+        System.out.println(element.toString());
+        MedicalOfficer medicalOfficer = new MedicalOfficer(
                 element.get(this.nic).toString(),
                 element.get(this.name).toString(),
-                element.get(this.dob).toString(),
-                element.get(this.specialization).toString()
+                element.get(this.dob).toString()
         );
+
+        if(element.get(this.specialization) != null){
+            medicalOfficer.setSpecialization(element.get(this.specialization).toString());
+        }
+
+        return medicalOfficer;
 
     }
 }

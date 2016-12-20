@@ -40,7 +40,7 @@ public abstract class User {
 
 	public void setName(String name) {this.name = name;}
 
-	public String getDateOfBirth() {return dob;}
+	public String getDob() {return dob;}
 
 	public void setDateOfBirth(String dateOfBirth) {this.dob = dateOfBirth;}
 

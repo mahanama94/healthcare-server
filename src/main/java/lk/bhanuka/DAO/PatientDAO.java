@@ -119,7 +119,7 @@ public class PatientDAO extends DAO{
         
         values.put(nic, patient.getNic().toString());
         values.put(name, patient.getName());
-        values.put(dob, patient.getDateOfBirth());
+        values.put(dob, patient.getDob());
         values.put(district_id, patient.getDistrict_id());
 
         HashMap response = this.dataService.insert(this.tableName, values);
@@ -148,7 +148,8 @@ public class PatientDAO extends DAO{
         Patient new_patient =  new Patient(
                 element.get(this.nic).toString(),
                 element.get(this.name).toString(),
-                element.get(this.dob).toString()
+                element.get(this.dob).toString(),
+                Long.parseLong(element.get(this.district_id).toString())
         );
 
 		return new_patient;

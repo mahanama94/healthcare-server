@@ -73,6 +73,10 @@ public class AuthController extends Controller {
         required.add("dob");
         required.add("role");
 
+        if(request.getParameter("role") == "medical_officer") {
+            required.add("specialization");
+        }
+
         HashMap validated = this.validator.validate(request, required);
 
         if(validated.get("error") != null){

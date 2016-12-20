@@ -14,6 +14,10 @@ public class MedicalOfficer extends User{
         this.specialization = specialization;
     }
 
+    public MedicalOfficer(String nic, String name, String dob){
+        this(nic, name, dob, "General");
+    }
+
     public void setSpecialization(String specialization){
 
         this.specialization = specialization;

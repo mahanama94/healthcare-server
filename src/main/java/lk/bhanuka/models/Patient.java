@@ -11,6 +11,11 @@ public class Patient extends User{
     	super(nic, name, dob);
     }
 
+    public Patient(String nic, String name, String dob, long districtId){
+        super(nic, name, dob);
+        this.district_id = districtId;
+    }
+
     public String getRole() {return "patient";}
 
     public int getAccessLevel() {return 0;}
