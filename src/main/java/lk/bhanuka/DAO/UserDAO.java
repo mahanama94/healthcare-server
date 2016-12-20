@@ -76,7 +76,9 @@ public class UserDAO extends DAO {
 //        if(credentials.get("role") == "medicalOfficer"){
 //            return this.medicalOfficerDAO.addMedicalOfficer();
 //        }
-        return this.patientDAO.addPatient(credentials);
+        HashMap returnList = new HashMap();
+        returnList.put("user", this.patientDAO.addPatient(credentials).get("patient"));
+        return returnList;
 
 //        return this.patientDAO.getPatient("0123456789");
 

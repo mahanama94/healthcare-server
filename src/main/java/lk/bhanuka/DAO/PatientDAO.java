@@ -32,7 +32,7 @@ public class PatientDAO extends DAO{
 
         ArrayList<String> conditions = new ArrayList<String>();
 
-        conditions.add(this.primaryKey+ " = "+ nic);
+        conditions.add(this.primaryKey+ " = '"+ nic+"'");
 
         List<HashMap> results = this.dataService.get(this.tableName, conditions);
 
@@ -88,7 +88,7 @@ public class PatientDAO extends DAO{
     public HashMap addPatient(HashMap patientData){
         HashMap values = new HashMap();
 
-        values.put(nic, patientData.get("nic"));
+        values.put(nic, patientData.get("nic").toString());
         values.put(name, patientData.get("name"));
         values.put(dob, patientData.get("dob"));
         values.put("pwd" ,patientData.get("password"));
@@ -101,11 +101,15 @@ public class PatientDAO extends DAO{
 
         if(response.get("error") == null){
 
-            response.put("patient", this.getPatient(patientData.get("nic").toString()));
+            //System.out.println("NIC : "+ patientData.get("nic").toString());
+
+            results.put("patient", this.getPatient(patientData.get("nic").toString()));
 
         }else{
-            response.put("error", response.get("error"));
+            results.put("error", response.get("error"));
         }
+
+        //System.out.println(results.toString());
         return results;
 
     }
@@ -113,7 +117,7 @@ public class PatientDAO extends DAO{
 
         HashMap values = new HashMap();
         
-        values.put(nic, patient.getNic());
+        values.put(nic, patient.getNic().toString());
         values.put(name, patient.getName());
         values.put(dob, patient.getDateOfBirth());
         values.put(district_id, patient.getDistrict_id());

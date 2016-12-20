@@ -78,8 +78,10 @@ public class AuthController extends Controller {
         if(validated.get("error") != null){
             return  validated;
         }
+        HashMap som = userDAO.addUser(validated);
+        validated.put("user", som.get("user"));
 
-        validated.put("user", userDAO.addUser(validated));
+        System.out.println(som.toString());
 
         return validated;
     }
