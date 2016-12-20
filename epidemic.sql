@@ -78,8 +78,7 @@ CREATE TABLE med_report(
   last_updated DATETIME,
   PRIMARY KEY(
     patient_nic,
-    disease_id,
-    med_officer_nic
+    disease_id
   ),
   FOREIGN KEY(patient_nic) REFERENCES users(nic) ON DELETE CASCADE,
   FOREIGN KEY(disease_id) REFERENCES disease(disease_id) ON DELETE CASCADE,
@@ -96,6 +95,18 @@ CREATE TABLE med_officer_assign(
   FOREIGN KEY(health_officer_nic) REFERENCES users(nic) ON DELETE CASCADE
 );
 
+CREATE TABLE district_disease(
+  district_id int UNSIGNED NOT NULL,
+  disease_id int UNSIGNED NOT NULL,
+  count int DEFAULT 0,
+  PRIMARY KEY(
+    district_id,
+    disease_id
+  ),
+  FOREIGN KEY(district_id) REFERENCES district(district_id) ON DELETE CASCADE,
+  FOREIGN KEY(disease_id) REFERENCES disease(disease_id) ON DELETE CASCADE
+);
+
 
 /* Views */
 /*CREATE VIEW patient AS
@@ -109,14 +120,6 @@ SELECT nic,NAME,pwd,dob,district_id,role,specialization,last_updated FROM users 
 
 CREATE VIEW health_officer AS
 SELECT nic,NAME,pwd,dob,district_id,role,specialization,last_updated FROM users WHERE role = "health_officer";
-
-
-
-
-
-
-
-
 
 /* Views */
 
@@ -210,7 +213,28 @@ BEGIN
     SET NEW.last_updated = NOW();
 END$$
 DELIMITER ;
+
+
+/* filling the district_disease table */
+
+DELIMITER $$
+CREATE TRIGGER after_med_report_patient_insert 
+    AFTER INSERT ON med_report
+    FOR EACH ROW 
+BEGIN
+    DECLARE district_id_val int unsigned;
+    
+    SELECT district_id INTO district_id_val FROM patient WHERE nic = NEW.patient_nic;  
+
+    INSERT INTO district_disease(district_id,disease_id,count) VALUES (district_id_val,NEW.disease_id,1)
+    ON DUPLICATE KEY UPDATE count = count+1;
+    
+END$$
+DELIMITER ;
+
+
 /* med_report Triggers */
+
 
 
 
