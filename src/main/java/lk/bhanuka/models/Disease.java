@@ -13,21 +13,14 @@ public class Disease {
 
     private String treatment;
 
-    public Disease(long id, String name){
+    private String symptoms;
+
+    public Disease(long id, String name, String description, String treatment, String symptoms){
         this.id = id;
         this.name = name;
-    }
-    
-    public Disease(String name, String description, String treatment){
-        this.name = name;
         this.description = description;
         this.treatment = treatment;
-    }
-
-    public Disease(long id, String name, String description, String treatment){
-        this(id, name);
-        this.description = description;
-        this.treatment = treatment;
+        this.symptoms = symptoms;
     }
 
     public void setId(Long id){ this.id = id; }
@@ -44,6 +37,9 @@ public class Disease {
     
     public String getTreatment(){ return this.treatment; }
 
+    public String getSymptoms(){ return this.symptoms; }
+
+    public String getUpdateDate(){ return "2016-12-15"; }
     // TODO: For testing
 	@Override
 	public String toString() {

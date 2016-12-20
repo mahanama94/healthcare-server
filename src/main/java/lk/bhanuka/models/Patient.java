@@ -6,21 +6,11 @@ package lk.bhanuka.models;
 
 public class Patient extends User{
  
-    public Patient(long patient_id, String nic, String name, String dob, long district_id){
-    	id = patient_id;
-    	this.nic = nic;
-    	this.name = name;
-    	this.dob = dob;
-    	this.district_id = district_id;
+    public Patient(String nic, String name, String dob){
+
+    	super(nic, name, dob);
     }
 
-    public Patient(String nic, String name, String dob, Long district_id){
-    	this.nic = nic;
-    	this.name = name;
-    	this.dob = dob;
-    	this.district_id = district_id;
-    }
-    
     public String getRole() {return "patient";}
 
     public int getAccessLevel() {return 0;}

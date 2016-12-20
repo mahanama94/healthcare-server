@@ -21,13 +21,14 @@ public class DiseaseDAO extends DAO {
 
 	private String description = "description";
 
+	private String symptoms = "symptoms";
+
 	private String treatment = "treatment";
 
 	public DiseaseDAO() {
 		super();
 		this.tableName = "disease";
 		this.primaryKey = "disease_id";
-
 	}
 
 	public ArrayList<Disease> diseaseList() {
@@ -86,9 +87,11 @@ public class DiseaseDAO extends DAO {
 		values.put(this.name, disease.getName());
 		values.put(this.description, disease.getDescription());
 		values.put(this.treatment, disease.getTreatment());
+		values.put(this.symptoms, disease.getSymptoms());
 
 		HashMap response = this.dataService.insert(this.tableName, values);
 
+		System.out.println("database response : "+ response.toString());
 		HashMap results =  new HashMap();
 
 		if(response.get("error") == null){
@@ -112,7 +115,7 @@ public class DiseaseDAO extends DAO {
 		HashMap values = new HashMap();
 		values.put(this.description, disease.getDescription());
 		values.put(this.treatment, disease.getTreatment());
-
+		values.put(this.symptoms, disease.getSymptoms());
 
 		ArrayList conditions = new ArrayList<>();
 		conditions.add(this.primaryKey + " = "+ disease.getId());
@@ -148,9 +151,13 @@ public class DiseaseDAO extends DAO {
 	
 
 	private Disease createDisease(HashMap element) {
-
-		Disease newDisease = new Disease(Long.valueOf(element.get(this.primaryKey).toString()),
-				element.get(this.name).toString());
+		System.out.println(element.toString());
+		Disease newDisease = new Disease(
+				Long.valueOf(element.get(this.primaryKey).toString()),
+				element.get(this.name).toString(),
+				element.get(this.description).toString(),
+				element.get(this.treatment).toString(),
+				element.get(this.symptoms).toString());
 
 		try {
 			newDisease.setDescription(element.get(this.description).toString());

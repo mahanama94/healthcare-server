@@ -65,14 +65,18 @@ public class DiseaseController extends Controller{
 		required.add("name");
         required.add("description");	
         required.add("treatment");
+        required.add("symptoms");
 
 		HashMap validated = this.validator.validate(request, required);
 		
 		if (validated.get("error") == null) {
-			Disease newDisease = new Disease(
+
+			Disease newDisease = new Disease(0,
 					request.getParameter("name"), request.getParameter("description"),
-					request.getParameter("treatment"));
-			return this.diseaseDAO.addDisease(newDisease);
+					request.getParameter("treatment"),
+					request.getParameter("symptoms"));
+
+				return this.diseaseDAO.addDisease(newDisease);
 		}
 		return validated;
 	}
@@ -86,11 +90,12 @@ public class DiseaseController extends Controller{
 		required.add("name");
 		required.add("description");
 		required.add("treatment");
+		required.add("symptoms");
 
 		if(this.validator.validate(request, required).get("error") == null){
 			Disease disease = new Disease(Long.parseLong(request.getParameter("id")),
 					request.getParameter("name"), request.getParameter("description"),
-					request.getParameter("treatment"));
+					request.getParameter("treatment"), request.getParameter("symptoms"));
 
 			return this.diseaseDAO.updateDisease(disease);
 		}

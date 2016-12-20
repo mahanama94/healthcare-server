@@ -11,15 +11,43 @@ import java.util.List;
  */
 public class MedicalOfficerDAO extends DAO{
 
+    private String nic = "nic";
+
+    private String name = "NAME";
+
+    private String dob = "dob";
+
+    private String specialization = "specialization";
+
     public MedicalOfficerDAO(){
         super();
         this.tableName = "medical_officer";
-        this.primaryKey = "med_officer_id";
+        this.primaryKey = this.nic;
     }
 
     public List<MedicalOfficer> getMedicalOfficers(){
 
         return this.findMedicalOfficers(new ArrayList());
+
+    }
+
+    public MedicalOfficer getMedicalOfficer(String nic){
+
+        ArrayList<String> conditions = new ArrayList<String>();
+
+        conditions.add( this.primaryKey+"  = "+ this.nic);
+
+        List<HashMap> results = this.dataService.get(this.tableName, conditions );
+
+        for(HashMap element : results) {
+
+            MedicalOfficer medicalOfficer = this.createMedicalOfficer(element);
+
+            return medicalOfficer;
+
+        }
+
+        return  null;
 
     }
 
@@ -71,7 +99,12 @@ public class MedicalOfficerDAO extends DAO{
 
     private MedicalOfficer createMedicalOfficer(HashMap element){
 
-        return new MedicalOfficer(Long.valueOf(element.get(this.primaryKey).toString()), element.get("NAME").toString());
+        return new MedicalOfficer(
+                element.get(this.nic).toString(),
+                element.get(this.name).toString(),
+                element.get(this.dob).toString(),
+                element.get(this.specialization).toString()
+        );
 
     }
 }

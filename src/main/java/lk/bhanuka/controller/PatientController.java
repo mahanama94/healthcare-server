@@ -46,9 +46,9 @@ public class PatientController {
     }
 
     @RequestMapping(value = "/patients/{id}", method = RequestMethod.GET)
-    public Patient getPatient(@PathVariable("id") Long id){
+    public Patient getPatient(@PathVariable("id") String nic){
 
-        return  this.patientDAO.getPatient(id);
+        return  this.patientDAO.getPatient(nic);
 
     }
 
@@ -66,8 +66,8 @@ public class PatientController {
         	
         	Patient newPatient = new Patient(request.getParameter("nic"),
         								request.getParameter("name"),
-        								request.getParameter("dob"),
-        								Long.valueOf(request.getParameter("district_id")));
+        								request.getParameter("dob")
+                                );
         						
         	
         	return patientDAO.addPatient(newPatient);

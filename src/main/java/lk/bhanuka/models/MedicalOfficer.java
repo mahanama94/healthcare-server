@@ -1,5 +1,7 @@
 package lk.bhanuka.models;
 
+import javax.swing.text.html.HTMLDocument;
+
 /**
  * Created by bhanuka on 12/9/16.
  */
@@ -7,15 +9,19 @@ public class MedicalOfficer extends User{
 
     private String specialization;
 
-    public MedicalOfficer(long id, String name){
-        //super(id, name);
+    public MedicalOfficer(String nic, String name, String dob, String specialization){
+        super(nic,name, dob );
+        this.specialization = specialization;
     }
-
 
     public void setSpecialization(String specialization){
 
         this.specialization = specialization;
 
+    }
+
+    public String getSpecialization(){
+        return this.specialization;
     }
 
 

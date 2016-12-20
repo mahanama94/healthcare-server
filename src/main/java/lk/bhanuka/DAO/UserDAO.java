@@ -14,46 +14,53 @@ import java.util.List;
  */
 public class UserDAO extends DAO {
 
-    private String password;
+    private String password = "pwd";
+
+    private String role = "role";
+
+    private MedicalOfficerDAO medicalOfficerDAO = new MedicalOfficerDAO();
+
+    private PatientDAO patientDAO = new PatientDAO();
 
     public UserDAO(){
         super();
-        this.tableName = "user";
-        this.primaryKey = "email";
-        this.password = "password";
+        this.tableName = "users";
+        this.primaryKey = "nic";
     }
 
-    public User getUser(String email, String password){
+    public User getUser(String nic, String password){
 
         ArrayList<String> conditions = new ArrayList<>();
 
-        conditions.add(this.primaryKey + " = '"+ email+"'");
+        conditions.add(this.primaryKey + " = '"+ nic +"'");
         conditions.add(this.password + " = '"+ password+"'");
 
         List<HashMap> response = this.dataService.get(this.tableName, conditions);
 
-        for(HashMap element : response){
+        if(response != null) {
 
-            User user =  this.createUser(element);
-            user.setEmail(email);
-            return user;
+
+            for (HashMap element : response) {
+
+                User user = this.createUser(element);
+                return user;
+            }
         }
 
         return null;
     }
 
-    public User getUser(String email){
+    public User getUser(String nic){
 
         ArrayList<String> conditions = new ArrayList<>();
 
-        conditions.add(this.primaryKey + " = '"+ email+"'");
+        conditions.add(this.primaryKey + " = '"+ nic +"'");
 
         List<HashMap> response = this.dataService.get(this.tableName, conditions);
 
         for(HashMap element : response){
 
             User user =  this.createUser(element);
-            user.setEmail(email);
 
             return user;
         }
@@ -61,25 +68,33 @@ public class UserDAO extends DAO {
         return null;
     }
 
-    public User createUser(User user){
+    public HashMap addUser(HashMap credentials){
 
-        // TODO - Connect with database and create user
+//        if(credentials.get("role") == "healthOfficer"){
+//            return this.medicalOfficerDAO.addMedicalOfficer();
+//        }
+//        if(credentials.get("role") == "medicalOfficer"){
+//            return this.medicalOfficerDAO.addMedicalOfficer();
+//        }
+        return this.patientDAO.addPatient(credentials);
 
-        return user;
+//        return this.patientDAO.getPatient("0123456789");
+
+
     }
 
     private User createUser(HashMap element){
 
         System.out.println(element.toString());
 
-        if(element.get("role") == "healthOfficer"){
-            return new HealthOfficer(1, "Health Officer");
+        if(element.get(this.role) == "healthOfficer"){
+            return this.medicalOfficerDAO.getMedicalOfficer(Integer.toUnsignedLong(10));
         }
         else if(element.get("role") == "medicalOfficer"){
-            return new MedicalOfficer(1, "Medical Officer");
+            return this.medicalOfficerDAO.getMedicalOfficer(element.get("nic").toString());
         }
 
-        return new Patient(1, "Patient NIC", "Patient Name", "Date of birth", 5);
+        return this.patientDAO.getPatient(element.get("nic").toString());
     }
 
 }

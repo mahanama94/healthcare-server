@@ -10,28 +10,40 @@ import java.util.List;
  */
 public class PatientDAO extends DAO{
 
-	private String nic;
+	private String nic = "nic";
 	
-	private String name;
+	private String name = "NAME";
 
-    private String dob;
+    private String dob = "dob";
     
-    private String district_id;
-   
+    private String district_id = "district_id";
 
     public PatientDAO(){
         super();
         this.tableName = " patient ";
-        this.primaryKey = "patient_id";
-        
-        this.nic = "nic";
-        this.name = "NAME";
-        this.dob = "dob";
-        this.district_id = "district_id";
+        this.primaryKey = this.nic;
     }
 
     public List<Patient> getPatients(){
         return this.findPatients(new ArrayList<String>());
+    }
+
+    public Patient getPatient(String nic){
+
+        ArrayList<String> conditions = new ArrayList<String>();
+
+        conditions.add(this.primaryKey+ " = "+ nic);
+
+        List<HashMap> results = this.dataService.get(this.tableName, conditions);
+
+        for(HashMap element : results){
+
+            Patient patient = this.createPatient(element);
+
+            return patient;
+        }
+        return null;
+
     }
 
     public Patient getPatient(Long id){
@@ -73,6 +85,30 @@ public class PatientDAO extends DAO{
 
     }
 
+    public HashMap addPatient(HashMap patientData){
+        HashMap values = new HashMap();
+
+        values.put(nic, patientData.get("nic"));
+        values.put(name, patientData.get("name"));
+        values.put(dob, patientData.get("dob"));
+        values.put("pwd" ,patientData.get("password"));
+        values.put(district_id,patientData.get("district_id"));
+        values.put("role", patientData.get("role"));
+
+        HashMap response = this.dataService.insert(this.tableName, values);
+
+        HashMap results = new HashMap();
+
+        if(response.get("error") == null){
+
+            response.put("patient", this.getPatient(patientData.get("nic").toString()));
+
+        }else{
+            response.put("error", response.get("error"));
+        }
+        return results;
+
+    }
     public HashMap addPatient(Patient patient){
 
         HashMap values = new HashMap();
@@ -103,13 +139,13 @@ public class PatientDAO extends DAO{
     }
     
 
-    private Patient createPatient(@SuppressWarnings("rawtypes") HashMap element){
+    private Patient createPatient(HashMap element){
 
-        Patient new_patient =  new Patient(Long.valueOf(element.get(this.primaryKey).toString()), 
-        								element.get(nic).toString(),
-        								element.get(name).toString(),
-        								element.get(dob).toString(),
-										Long.valueOf(element.get(district_id).toString()));
+        Patient new_patient =  new Patient(
+                element.get(this.nic).toString(),
+                element.get(this.name).toString(),
+                element.get(this.dob).toString()
+        );
 
 		return new_patient;
      }

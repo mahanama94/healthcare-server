@@ -12,7 +12,7 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationExceptio
  */
 public class MySQLDataAdapter implements DataAdapter {
 
-	private String databaseName = "epidemic";
+	private String databaseName = "epidemic_final";
 	private String username = "databaseProject";
 	private String hostName = "localhost";
 	private String password = "P@ssword123";
@@ -257,13 +257,27 @@ public class MySQLDataAdapter implements DataAdapter {
 
 		String processedConditions = "";
 
-		for (String condition : conditions) {
+		if(conditions.size() != 0){
 
-			processedConditions = condition + " AND ";
+			processedConditions = conditions.get(0);
 
+			for(int i =1; i < conditions.size(); i++){
+
+				processedConditions = processedConditions + " AND " + conditions.get(i);
+			}
+		}
+		else{
+
+			processedConditions = " '1' = '1' ";
 		}
 
-		processedConditions = processedConditions + " '1' = '1' ";
+//		for (String condition : conditions) {
+//			System.out.println("condition : "+condition);
+//			processedConditions = condition + " AND ";
+//
+//		}
+//
+//		processedConditions = processedConditions + " '1' = '1' ";
 
 		query = query + " where "+ processedConditions;
 

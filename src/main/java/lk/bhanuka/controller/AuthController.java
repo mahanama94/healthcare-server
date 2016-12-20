@@ -34,7 +34,7 @@ public class AuthController extends Controller {
 
         ArrayList<String> required = new ArrayList<>();
 
-        required.add("email");
+        required.add("nic");
         required.add("password");
 
         HashMap validated = validator.validate(request, required);
@@ -43,7 +43,7 @@ public class AuthController extends Controller {
             return validated;
         }
 
-        User user = this.userDAO.getUser(request.getParameter("email").toString(),
+        User user = this.userDAO.getUser(request.getParameter("nic").toString(),
                 request.getParameter( "password").toString());
 
         HashMap response = new HashMap();
@@ -55,7 +55,8 @@ public class AuthController extends Controller {
         }
         else {
             response.put("status", "success");
-            response.put("token", TokenGenerator.createToken(user.getId(), user.getEmail()));
+            response.put("token", TokenGenerator.createToken(1, user.getNic()));
+            response.put("user", user);
         }
         return response;
     }
@@ -65,10 +66,12 @@ public class AuthController extends Controller {
 
         ArrayList<String> required = new ArrayList<>();
 
-        required.add("email");
+        required.add("nic");
+        required.add("name");
         required.add("password");
-        required.add("city");
-        required.add("phone");
+        required.add("district_id");
+        required.add("dob");
+        required.add("role");
 
         HashMap validated = this.validator.validate(request, required);
 
@@ -76,6 +79,8 @@ public class AuthController extends Controller {
             return  validated;
         }
 
-        return  null;
+        validated.put("user", userDAO.addUser(validated));
+
+        return validated;
     }
 }
