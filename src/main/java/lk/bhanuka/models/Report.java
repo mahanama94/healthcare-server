@@ -42,6 +42,10 @@ public class Report {
 	public String getDisease_name() {
 		return disease_name;
 	}
+	
+	public String getPatient_nic() {
+		return patient_nic;
+	}
 
 	public String getComments() {
 		return comments;
@@ -60,8 +64,11 @@ public class Report {
 	}
 	
 	
+	
 
 	// Basic Setters \\
+
+	
 
 	public void setMed_officer_name(String med_officer_name) {
 		this.med_officer_name = med_officer_name;
