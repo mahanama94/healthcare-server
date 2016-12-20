@@ -1,5 +1,6 @@
 package lk.bhanuka.interceptors;
 
+import lk.bhanuka.authentication.Auth;
 import lk.bhanuka.authentication.Authenticator;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,13 +26,17 @@ public class AuthInterceptor implements HandlerInterceptor{
 
         response.setContentType("application/json");
 
-//        if( ! this.authenticator.checkAuth(request)){
-//
-//            this.handleNonAuthenticated(response);
-//
-//            return false;
-//
-//        }
+        if( ! this.authenticator.checkAuth(request)){
+
+            this.handleNonAuthenticated(response);
+
+            return false;
+
+        }
+
+        if(Auth.getUser()!= null){
+            System.out.println("Role" + Auth.getUser().getRole());
+        }
 
         return true;
     }

@@ -36,16 +36,19 @@ public class Auth {
 
     public static boolean login(String token){
 
-        String email = TokenGenerator.getEmail(token);
+        String nic = TokenGenerator.getNIC(token);
 
-        System.out.println(token);
-        System.out.println("email : " + email);
+        System.out.println("TOKEN : " +token);
+        System.out.println("NIC : " + nic);
 
-        if(email == null || Auth.userDAO.getUser(email)==null){
+        if(nic == null){
+            return false;
+        }
+        else if (Auth.userDAO.getUser(nic)== null){
             return false;
         }
 
-        return Auth.login(Auth.userDAO.getUser(email));
+        return Auth.login(Auth.userDAO.getUser(nic));
 
     }
 }

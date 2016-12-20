@@ -30,7 +30,7 @@ public class MedicalOfficer extends User{
 
 
     public String getRole() {
-        return "medicalOfficer";
+        return "medical_officer";
     }
 
     public int getAccessLevel() {

@@ -102,10 +102,10 @@ public class UserDAO extends DAO {
 
         System.out.println(element.toString());
 
-        if(element.get(this.role) == "healthOfficer"){
+        if(element.get(this.role) == "health_officer"){
             return this.medicalOfficerDAO.getMedicalOfficer(Integer.toUnsignedLong(10));
         }
-        else if(element.get("role") == "medicalOfficer"){
+        else if(element.get("role").toString() == "medical_officer"){
             return this.medicalOfficerDAO.getMedicalOfficer(element.get("nic").toString());
         }
 

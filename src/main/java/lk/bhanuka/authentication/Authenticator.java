@@ -23,9 +23,7 @@ public class Authenticator {
 
         String path = request.getRequestURI().substring(request.getContextPath().length());
         System.out.println("request path : " + path);
-        if(request.getParameter("data") != null) {
-            System.out.println("data : "+ request.getParameter("data").toString());
-        }
+
         if(this.guest.contains(path)){
             return true;
         }
@@ -34,11 +32,12 @@ public class Authenticator {
             return false;
         }
 
-        return true;
-//        if(Auth.login(request.getParameter("token"))){
-//            return true;
-//        }
-//        return false;
+        if(Auth.login(request.getParameter("token"))){
+            System.out.println("login success");
+            System.out.println("NIC : " +Auth.getUser().getNic());
+            return true;
+        }
+        return false;
 
     }
 

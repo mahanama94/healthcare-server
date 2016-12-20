@@ -10,12 +10,12 @@ import java.io.UnsupportedEncodingException;
  */
 public class TokenGenerator {
 
-    public static String createToken(long id, String email){
+    public static String createToken(long id, String nic){
         SignatureAlgorithm algorithm = SignatureAlgorithm.HS256;
 
         JwtBuilder builder = null;
         try {
-            builder = Jwts.builder().claim("id", id).claim("email", email)
+            builder = Jwts.builder().claim("id", id).claim("nic", nic)
                     .signWith(
                             SignatureAlgorithm.HS256, "secret".getBytes("UTF-8"));
         } catch (UnsupportedEncodingException e) {
@@ -26,12 +26,12 @@ public class TokenGenerator {
 
     }
 
-    public static String getEmail(String jwt){
+    public static String getNIC(String jwt){
 
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey("secret".getBytes("UTF-8")).parseClaimsJws(jwt);
 
-            return claims.getBody().get("email").toString();
+            return claims.getBody().get("nic").toString();
         } catch (UnsupportedEncodingException e) {
             return null;
             //e.printStackTrace();
@@ -42,22 +42,22 @@ public class TokenGenerator {
 
     }
 
-    public static long getId(String jwt){
-
-        try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey("secret".getBytes("UTF-8")).parseClaimsJws(jwt);
-
-            return Long.parseLong(claims.getBody().get("id").toString());
-
-        } catch (UnsupportedEncodingException e) {
-            //e.printStackTrace();
-            return -1;
-        }
-        catch (Exception e){
-            return -1;
-            //e.printStackTrace();
-        }
-
-    }
+//    public static long getId(String jwt){
+//
+//        try {
+//            Jws<Claims> claims = Jwts.parser().setSigningKey("secret".getBytes("UTF-8")).parseClaimsJws(jwt);
+//
+//            return Long.parseLong(claims.getBody().get("id").toString());
+//
+//        } catch (UnsupportedEncodingException e) {
+//            //e.printStackTrace();
+//            return -1;
+//        }
+//        catch (Exception e){
+//            return -1;
+//            //e.printStackTrace();
+//        }
+//
+//    }
 
 }

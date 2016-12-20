@@ -12,7 +12,7 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationExceptio
  */
 public class MySQLDataAdapter implements DataAdapter {
 
-	private String databaseName = "epidemic";
+	private String databaseName = "epidemic_final";
 	private String username = "databaseProject";
 	private String hostName = "localhost";
 	private String password = "P@ssword123";
