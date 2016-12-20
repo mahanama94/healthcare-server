@@ -30,7 +30,7 @@ public class DiseaseDAO extends DAO {
 
 	}
 
-	public List<Disease> diseaseList() {
+	public ArrayList<Disease> diseaseList() {
 
 		return this.findDiseases(new ArrayList());
 
@@ -61,7 +61,7 @@ public class DiseaseDAO extends DAO {
 	
 
 
-	public List<Disease> findDiseases(ArrayList conditions) {
+	public ArrayList<Disease> findDiseases(ArrayList conditions) {
 
 		ArrayList<Disease> diseases = new ArrayList<Disease>();
 

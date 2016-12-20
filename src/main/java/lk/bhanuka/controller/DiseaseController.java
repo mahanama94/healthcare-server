@@ -26,7 +26,7 @@ public class DiseaseController extends Controller{
 	}
 
 	@RequestMapping(value = "/diseases", method = RequestMethod.GET)
-	public List getDiseases() {
+	public ArrayList getDiseases() {
 
 		return this.diseaseDAO.diseaseList();
 
@@ -45,7 +45,7 @@ public class DiseaseController extends Controller{
 		ArrayList conditions = new ArrayList();
 
 		conditions.add("disease_name" + " LIKE '%"+ params.get("name") +"%'");
-		conditions.add("description" + " LIKE '%"+ params.get("description") +"%'");
+		//conditions.add("description" + " LIKE '%"+ params.get("description") +"%'");
 		
 		return diseaseDAO.findDiseases(conditions);
 	}
