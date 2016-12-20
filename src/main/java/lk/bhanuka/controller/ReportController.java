@@ -1,8 +1,11 @@
 package lk.bhanuka.controller;
 
 import lk.bhanuka.DAO.ReportDAO;
+import lk.bhanuka.authentication.Auth;
 import lk.bhanuka.models.Report;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,8 +24,24 @@ public class ReportController {
 
     @RequestMapping(value = "/reports", method = RequestMethod.GET)
     public List getReports(){
-
-        return  this.reportDAO.getReports();
+    	String role = Auth.getUser().getRole();
+    	String nic = Auth.getUser().getNic();
+    	System.out.println(role);
+    	if (role == "patient"){
+    		ArrayList conditions = new ArrayList();
+    		//conditions.add("disease_name" + " LIKE '%"+ params.get("name") +"%'");
+    		
+    		conditions.add("patient_nic" + " = '" + nic + "'");
+    		//return reportDAO.getReports()
+    		return reportDAO.findReports(conditions);
+    	}
+    	else{
+    		//System.out.println(role);
+    		return null;
+    	}
+    	
+        //return  this.reportDAO.getReports();
+    	//return role;
 
     }
 

@@ -28,7 +28,13 @@ public class PatientDAO extends DAO{
         return this.findPatients(new ArrayList<String>());
     }
 
-    public Patient getPatient(String nic){
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public Patient getPatient(String nic){
 
         ArrayList<String> conditions = new ArrayList<String>();
 
