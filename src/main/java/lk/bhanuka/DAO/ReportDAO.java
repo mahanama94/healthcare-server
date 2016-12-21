@@ -28,53 +28,6 @@ public class ReportDAO extends DAO {
 
 	}
 
-	// public Report getReport(String med_officer_nic, String patient_nic){
-	// ArrayList<String> conditions = new ArrayList<String>();
-	//
-	// conditions.add(" med_officer_nic " + med_officer_nic);
-	// conditions.add(" patient_nic " + patient_nic);
-	//
-	//
-	// }
-
-	// TODO modify with new primary keys
-	// public ArrayList<E>Report getReport(ArrayList conditions){
-	//
-	// //ArrayList<String> conditions = new ArrayList<String>();
-	//
-	// //conditions.add(" id = "+ id.toString());
-	//
-	// List<HashMap> results = this.dataService.get(this.tableName, conditions);
-	//
-	// for(HashMap element : results){
-	//
-	// //MedicalOfficer medicalOfficer = (new
-	// MedicalOfficerDAO()).getMedicalOfficer(Long.valueOf(element.get("medicalOfficerId").toString()));
-	//
-	//
-	//
-	// //Report report = new Report(element.get("id").toString(),
-	// medicalOfficer);
-	//
-	// Report report = new Report();
-	//
-	// report.setLast_updated("last_updated");
-	// report.setComments("comments");
-	// report.setMed_officer_nic("med_officer_nic");
-	// report.setMed_officer_name("med_officer_name");
-	// report.setDisease_name("disease_name");
-	// report.setPatient_nic("patient_nic");
-	// report.setPatient_name("patient_name");
-	// report.setPrescription("prescription");
-	// report.setReport_date("report_date");
-	//
-	// return report;
-	//
-	// }
-	//
-	// return null;
-	// }
-
 	public List<Report> findReports(ArrayList<String> conditions) {
 
 		ArrayList<Report> reports = new ArrayList<Report>();
