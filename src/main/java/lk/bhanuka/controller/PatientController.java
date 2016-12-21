@@ -16,7 +16,7 @@ import java.util.List;
  * Created by bhanuka on 12/11/16.
  */
 @RestController
-public class PatientController {
+public class PatientController extends Controller{
 
 
     private PatientDAO patientDAO;
@@ -39,9 +39,18 @@ public class PatientController {
 
     // TODO - implement search
     @RequestMapping( value = "/patients/search", method = RequestMethod.GET)
-    public List findPatients(){
+    public List findPatients(HttpServletRequest request){
 
-        return  this.patientDAO.findPatients(new ArrayList<String>());
+        String name = request.getParameter("name");
+
+        if(name == null){
+            name = "";
+        }
+        ArrayList conditions = new ArrayList();
+
+        conditions.add("Name LIKE '"+name+"%'");
+
+        return  this.patientDAO.findPatients(conditions);
 
     }
 
