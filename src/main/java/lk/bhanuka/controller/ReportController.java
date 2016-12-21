@@ -50,7 +50,7 @@ public class ReportController extends Controller {
 
 		String role = Auth.getUser().getRole();
 
-		if (role == "medical_officer" || role == "health_officer" || role == "patient") {
+		if (role == "medical_officer" || role == "health_officer") {
 			HashMap params = new HashMap();
 
 			params.put("name", request.getParameter("name"));
