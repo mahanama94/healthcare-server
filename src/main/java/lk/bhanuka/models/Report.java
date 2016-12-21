@@ -28,47 +28,8 @@ public class Report {
 	public Report() {
 
 	}
-	
-	// Basic Getters \\
-	
-	public String getPatient_name() {
-		return patient_name;
-	}
-
-	public String getMed_officer_name() {
-		return med_officer_name;
-	}
-
-	public String getDisease_name() {
-		return disease_name;
-	}
-	
-	public String getPatient_nic() {
-		return patient_nic;
-	}
-
-	public String getComments() {
-		return comments;
-	}
-
-	public String getPrescription() {
-		return prescription;
-	}
-
-	public String getReport_date() {
-		return report_date;
-	}
-
-	public String getLast_updated() {
-		return last_updated;
-	}
-	
-	
-	
 
 	// Basic Setters \\
-
-	
 
 	public void setMed_officer_name(String med_officer_name) {
 		this.med_officer_name = med_officer_name;
@@ -111,6 +72,48 @@ public class Report {
 
 	public void setLast_updated(String last_updated) {
 		this.last_updated = last_updated;
+	}
+
+	// Basic Getters \\
+
+	public String getPatient_nic() {
+		return patient_nic;
+	}
+
+	public String getPatient_name() {
+		return patient_name;
+	}
+
+	public String getMed_officer_name() {
+		return med_officer_name;
+	}
+
+	public String getMed_officer_nic() {
+		return med_officer_nic;
+	}
+
+	public Long getDisease_id() {
+		return disease_id;
+	}
+
+	public String getDisease_name() {
+		return disease_name;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public String getPrescription() {
+		return prescription;
+	}
+
+	public String getReport_date() {
+		return report_date;
+	}
+
+	public String getLast_updated() {
+		return last_updated;
 	}
 
 	// Basic setters and Getters \\
