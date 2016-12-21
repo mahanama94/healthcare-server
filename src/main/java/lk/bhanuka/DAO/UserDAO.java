@@ -78,37 +78,31 @@ public class UserDAO extends DAO {
 //        }
         HashMap returnList = new HashMap();
 
-        System.out.println("Role : "+ credentials.toString());
-
         if(credentials.get("role").toString().equals("medical_officer")){
-            System.out.println("herer");
             returnList.put("user", this.medicalOfficerDAO.addMedcicalOfficer(credentials).get("medicalOfficer"));
 
         }
         else {
-            System.out.println("there");
             returnList.put("user", this.patientDAO.addPatient(credentials).get("patient"));
         }
 
-        System.out.println("retuen list" + returnList.toString());
         return returnList;
-
-//        return this.patientDAO.getPatient("0123456789");
 
 
     }
 
     private User createUser(HashMap element){
 
-        System.out.println(element.toString());
+        //System.out.println("ROLE : " + element.get("role").toString());
 
         if(element.get(this.role) == "health_officer"){
             return this.medicalOfficerDAO.getMedicalOfficer(Integer.toUnsignedLong(10));
         }
-        else if(element.get("role").toString() == "medical_officer"){
+        else if(element.get("role").toString().equals("medical_officer")){
+            //System.out.println("medical_officer created ");
             return this.medicalOfficerDAO.getMedicalOfficer(element.get("nic").toString());
         }
-
+        //System.out.println("patient created ");
         return this.patientDAO.getPatient(element.get("nic").toString());
     }
 

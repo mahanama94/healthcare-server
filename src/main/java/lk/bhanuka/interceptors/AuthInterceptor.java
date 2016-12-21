@@ -34,9 +34,9 @@ public class AuthInterceptor implements HandlerInterceptor{
 
         }
 
-        if(Auth.getUser()!= null){
-            System.out.println("Role" + Auth.getUser().getRole());
-        }
+//        if(Auth.getUser()!= null){
+//            System.out.println("Role" + Auth.getUser().getRole());
+//        }
 
         return true;
     }

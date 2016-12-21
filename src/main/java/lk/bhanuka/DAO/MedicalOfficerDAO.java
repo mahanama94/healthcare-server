@@ -143,6 +143,9 @@ public class MedicalOfficerDAO extends DAO{
         if(element.get(this.specialization) != null){
             medicalOfficer.setSpecialization(element.get(this.specialization).toString());
         }
+        else{
+            medicalOfficer.setSpecialization("general");
+        }
 
         return medicalOfficer;
 
