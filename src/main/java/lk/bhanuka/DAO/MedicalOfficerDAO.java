@@ -147,6 +147,10 @@ public class MedicalOfficerDAO extends DAO{
             medicalOfficer.setSpecialization("general");
         }
 
+        if (element.get("district_id") != null){
+            medicalOfficer.setDistrict_id(Long.parseLong(element.get("district_id").toString()));
+        }
+
         return medicalOfficer;
 
     }

@@ -57,7 +57,8 @@ public class ReportController extends Controller{
 
 			ArrayList conditions = new ArrayList();
 			String name = (String) params.get("name");
-			 
+
+
 			conditions.add("patient_nic" + " in " + "(select nic from patient where NAME like '%" + name + "%')");
 			return reportDAO.findReports(conditions);
 			

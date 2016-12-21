@@ -158,6 +158,10 @@ public class PatientDAO extends DAO{
                 Long.parseLong(element.get(this.district_id).toString())
         );
 
+        if(element.get("district_id") != null) {
+            new_patient.setDistrict_id(Long.parseLong(element.get("district_id").toString()));
+        }
+
 		return new_patient;
      }
 

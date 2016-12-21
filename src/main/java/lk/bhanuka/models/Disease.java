@@ -17,7 +17,7 @@ public class Disease {
 
     private String symptoms;
 
-    private Time updateDate;
+    private String updateDate;
 
     public Disease(long id, String name, String description, String treatment, String symptoms){
         this.id = id;
@@ -27,7 +27,7 @@ public class Disease {
         this.symptoms = symptoms;
     }
 
-    public void setUpdateDate(Time date){ this.updateDate = date; }
+    public void setUpdateDate(String date){ this.updateDate = date; }
 
     public void setId(Long id){ this.id = id; }
     

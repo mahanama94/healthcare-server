@@ -165,7 +165,7 @@ public class DiseaseDAO extends DAO {
 				element.get(this.symptoms).toString());
 
 		try {
-			newDisease.setUpdateDate(Time.valueOf(element.get(this.lastUpdated).toString()));
+			newDisease.setUpdateDate(element.get(this.lastUpdated).toString());
 
 			newDisease.setDescription(element.get(this.description).toString());
 
@@ -174,6 +174,7 @@ public class DiseaseDAO extends DAO {
 		} catch (Exception e) {
 
 			System.out.println("Exception");
+			e.printStackTrace();
 
 		} finally {
 
