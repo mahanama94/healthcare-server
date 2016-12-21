@@ -24,6 +24,8 @@ public class Report {
 	private String patient_name;
 	private String prescription = null;
 	private String report_date = null;
+	
+	private String last_updated_by = null;
 
 	public Report() {
 
@@ -73,8 +75,18 @@ public class Report {
 	public void setLast_updated(String last_updated) {
 		this.last_updated = last_updated;
 	}
+	
+	public void setLast_updated_by(String last_updated_by) {
+		this.last_updated_by = last_updated_by;
+	}
+	
+	
 
 	// Basic Getters \\
+
+	public String getLast_updated_by() {
+		return last_updated_by;
+	}
 
 	public String getPatient_nic() {
 		return patient_nic;

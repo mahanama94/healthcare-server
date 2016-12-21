@@ -116,6 +116,7 @@ public class ReportDAO extends DAO {
 		HashMap values = new HashMap();
 		values.put("comments", report.getComments());
 		values.put("prescriptions", report.getPrescription());
+		values.put("last_updated_by", report.getLast_updated_by());
 
 		ArrayList conditions = new ArrayList();
 		conditions.add("patient_nic" + " = '"+ report.getPatient_nic() + "'");

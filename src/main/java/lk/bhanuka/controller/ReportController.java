@@ -103,6 +103,7 @@ public class ReportController extends Controller{
 		String patient_nic = request.getParameter("patient_nic");
 		String med_officer_nic = request.getParameter("med_officer_nic");
 		Long disease_id = Long.parseLong(request.getParameter("disease_id"));
+		String last_updated_by = Auth.getUser().getNic();
 		
 		String comments = request.getParameter("comments");
 		String prescription = request.getParameter("prescription");
@@ -114,6 +115,7 @@ public class ReportController extends Controller{
 		report.setComments(comments);
 		report.setPrescription(prescription);
 		report.setDisease_id(disease_id);
+		report.setLast_updated_by(last_updated_by);
 		
 		return reportDAO.updateReport(report);
 		
