@@ -76,6 +76,7 @@ CREATE TABLE med_report(
   comments VARCHAR(500),
   prescriptions VARCHAR(500),
   last_updated DATETIME,
+  last_updated_by CHAR(10)
   PRIMARY KEY(
     patient_nic,
     disease_id
@@ -215,6 +216,16 @@ END$$
 DELIMITER ;
 
 
+DELIMITER $$
+CREATE TRIGGER before_med_report_date_insert 
+    BEFORE INSERT ON med_report
+    FOR EACH ROW 
+BEGIN
+    SET NEW.report_date = NOW();
+END$$
+DELIMITER ;
+
+
 /* filling the district_disease table */
 
 DELIMITER $$
@@ -235,16 +246,26 @@ DELIMITER ;
 
 /* med_report Triggers */
 
+/* Triggers*/
+
+/* Indexes */
+
+/* user - name */
+CREATE INDEX nameIndex ON users(NAME);
+
+/* disease - disease_name */
+CREATE INDEX disease_nameIndex ON disease(disease_name);
+
+/* report - patient_nic */
+CREATE INDEX patient_nicIndex ON med_report(patient_nic);
+
+/* district_disease - district_id, disease_id */
+CREATE INDEX district_id_disease_idIndex ON district_disease(district_id,disease_id);
 
 
 
 
-
-
-
-
-/* Triggers There are other triggers comming up :p*/
-
+/* Indexes */
 
 
 /* Inserts */
