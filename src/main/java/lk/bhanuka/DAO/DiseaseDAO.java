@@ -3,6 +3,7 @@ package lk.bhanuka.DAO;
 import lk.bhanuka.models.Disease;
 import org.springframework.stereotype.Component;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,8 @@ public class DiseaseDAO extends DAO {
 	private String symptoms = "symptoms";
 
 	private String treatment = "treatment";
+
+	private String lastUpdated= "last_updated";
 
 	public DiseaseDAO() {
 		super();
@@ -162,9 +165,12 @@ public class DiseaseDAO extends DAO {
 				element.get(this.symptoms).toString());
 
 		try {
+			newDisease.setUpdateDate(Time.valueOf(element.get(this.lastUpdated).toString()));
+
 			newDisease.setDescription(element.get(this.description).toString());
 
 			newDisease.setTreatment(element.get(this.treatment).toString());
+
 		} catch (Exception e) {
 
 			System.out.println("Exception");

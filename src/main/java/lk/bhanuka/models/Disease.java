@@ -1,5 +1,7 @@
 package lk.bhanuka.models;
 
+import java.sql.Time;
+
 /**
  * Created by bhanuka on 12/9/16
  */
@@ -15,6 +17,8 @@ public class Disease {
 
     private String symptoms;
 
+    private Time updateDate;
+
     public Disease(long id, String name, String description, String treatment, String symptoms){
         this.id = id;
         this.name = name;
@@ -22,6 +26,8 @@ public class Disease {
         this.treatment = treatment;
         this.symptoms = symptoms;
     }
+
+    public void setUpdateDate(Time date){ this.updateDate = date; }
 
     public void setId(Long id){ this.id = id; }
     
