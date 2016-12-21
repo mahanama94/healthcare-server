@@ -68,6 +68,8 @@ public class ReportController extends Controller{
 
 	}
 	
+// TODO: 
+	
 //	@RequestMapping(value = "/reports", method = RequestMethod.POST)
 //	public HashMap addDisease(HttpServletRequest request) {
 //		
