@@ -4,6 +4,7 @@ import lk.bhanuka.models.HealthOfficer;
 import lk.bhanuka.models.MedicalOfficer;
 import lk.bhanuka.models.Patient;
 import lk.bhanuka.models.User;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,9 +34,13 @@ public class UserDAO extends DAO {
         ArrayList<String> conditions = new ArrayList<>();
 
         conditions.add(this.primaryKey + " = '"+ nic +"'");
-        conditions.add(this.password + " = '"+ password+"'");
+//        conditions.add(this.password + " = '"+ BCrypt.hashpw(password, BCrypt.gensalt())+"'");
 
         List<HashMap> response = this.dataService.get(this.tableName, conditions);
+
+        if( ! BCrypt.checkpw(password, response.get(0).get("pwd").toString())){
+            return null;
+        }
 
         if(response != null) {
 

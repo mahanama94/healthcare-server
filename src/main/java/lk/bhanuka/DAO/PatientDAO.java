@@ -1,6 +1,8 @@
 package lk.bhanuka.DAO;
 
 import lk.bhanuka.models.Patient;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -97,7 +99,8 @@ public class PatientDAO extends DAO{
         values.put(nic, patientData.get("nic").toString());
         values.put(name, patientData.get("name"));
         values.put(dob, patientData.get("dob"));
-        values.put("pwd" ,patientData.get("password"));
+        values.put("pwd" , BCrypt.hashpw(patientData.get("password").toString(), BCrypt.gensalt()));
+        //values.put("pwd", patientData.get("password"));
         values.put(district_id,patientData.get("district_id"));
         values.put("role", patientData.get("role"));
 

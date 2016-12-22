@@ -1,6 +1,7 @@
 package lk.bhanuka.DAO;
 
 import lk.bhanuka.models.MedicalOfficer;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -106,7 +107,7 @@ public class MedicalOfficerDAO extends DAO{
         values.put(nic, credentials.get("nic").toString());
         values.put(name, credentials.get("name"));
         values.put(dob, credentials.get("dob"));
-        values.put("pwd" , credentials.get("password"));
+        values.put("pwd" , BCrypt.hashpw(credentials.get("password").toString(), BCrypt.gensalt()));
         values.put(this.district, credentials.get("district_id"));
         values.put("role", "medical_officer");
         values.put(this.specialization,credentials.get("specialization"));

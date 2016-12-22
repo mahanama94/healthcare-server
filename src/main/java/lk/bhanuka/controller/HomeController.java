@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by bhanuka on 12/21/16.
@@ -20,12 +21,13 @@ public class HomeController extends Controller {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/")
-    public HashMap getHome(){
+    public List getHome(){
         HashMap results = new HashMap();
 
         results.put("diseases", this.homeDAO.getHomeContent());
 
-        return results;
+        return this.homeDAO.getHomeContent();
+//        return results;
     }
 
 }
